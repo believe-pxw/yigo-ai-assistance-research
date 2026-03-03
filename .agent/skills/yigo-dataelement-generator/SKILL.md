@@ -13,39 +13,8 @@ DataElement 文件按 **RefControlType 分文件组织**，每种控件类型对
 
 ## XSD 参考
 
-- 根定义：[DataElementDef.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/DataElementDef.xsd)
-- 专有属性：[DataElementDefDefine.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/DataElementDefDefine.xsd)
-
-## 文件结构
-
-```
-resource/DataElement/
-├── DataElementDef_TextEditor.xml
-├── DataElementDef_NumberEditor.xml
-├── DataElementDef_NumberEditor_Money_16_2.xml
-├── DataElementDef_NumberEditor_Quantity_16_3.xml
-├── DataElementDef_Dictionary.xml
-├── DataElementDef_Dictionary_Multi.xml
-├── DataElementDef_DynamicDict.xml
-├── DataElementDef_DynamicDict_Multi.xml
-├── DataElementDef_ComboBox.xml
-├── DataElementDef_CheckBox.xml
-├── DataElementDef_CheckListBox.xml
-├── DataElementDef_DatePicker.xml
-├── DataElementDef_UTCDatePicker.xml
-├── DataElementDef_MonthPicker.xml
-├── DataElementDef_TimePicker.xml
-├── DataElementDef_Button.xml
-├── DataElementDef_TextButton.xml
-├── DataElementDef_Image.xml
-├── DataElementDef_PasswordEditor.xml
-├── DataElementDef_RichEditor.xml
-├── DataElementDef_TextArea.xml
-├── DataElementDef_Separator.xml
-├── DataElementDef_SystemField.xml
-├── DataElementDef_ERPSystemField.xml
-└── DataElementDef_WebBrowser.xml
-```
+- 根定义：[DataElementDef.xsd](../xsd/DataElementDef.xsd)
+- 专有属性：[DataElementDefDefine.xsd](../xsd/element/complex/DataElementDefDefine.xsd)
 
 ## XML 骨架
 
@@ -150,8 +119,7 @@ resource/DataElement/
 
 ### 3. DataDiffLog 默认值
 
-- 绝大多数 DataElement 设置 `DataDiffLog="true"`
-- 仅少量字段省略或设为 false
+- 取决于字段是否要记录差异日志
 
 ### 4. FieldLabel 生成
 
@@ -179,4 +147,4 @@ resource/DataElement/
 </DataElement>
 ```
 
-→ 追加到 `DataElementDef_SystemField.xml` 的 `<DataElementCollection>` 内。
+→ 追加到 `DataElementDef_Dictionary.xml` 的 `<DataElementCollection>` 内。

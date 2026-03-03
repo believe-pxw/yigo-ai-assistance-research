@@ -13,8 +13,8 @@ description: 生成与解读 YIGO Form XML 中的 Grid 表格控件，包含 Gri
 
 ## XSD 参考文件
 
-- 主文件：[Grid.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/Grid.xsd)（913 行）
-- 控件属性：[ControlAttributeGroupDefinition.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/attribute/ControlAttributeGroupDefinition.xsd)
+- 主文件：[Grid.xsd](../xsd/element/complex/Grid.xsd)（913 行）
+- 控件属性：[ControlAttributeGroupDefinition.xsd](../xsd/attribute/ControlAttributeGroupDefinition.xsd)
 
 ## Grid 完整结构
 

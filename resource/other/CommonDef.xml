@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<CommonDef>
-    <OperationCollection/>
-    <StatusCollection>
-        <Status Key="Init" Caption="初始状态" Value="0"/>
-        <Status Key="Commit" Caption="已提交" Value="10"/>
-        <Status Key="Audited" Caption="审批完成最后状态" Value="999"/>
-    </StatusCollection>
-</CommonDef>

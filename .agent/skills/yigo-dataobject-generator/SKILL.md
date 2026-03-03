@@ -13,8 +13,8 @@ description: 生成与解读 YIGO DataObject XML 配置，包含 TableCollection
 
 ## XSD 参考文件
 
-- 主文件：[DataObject.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/DataObject.xsd)
-- 详细定义：[DataObjectDefine.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/DataObjectDefine.xsd)
+- 主文件：[DataObject.xsd](../xsd/DataObject.xsd)
+- 详细定义：[DataObjectDefine.xsd](../xsd/element/complex/DataObjectDefine.xsd)
 
 ## 数据模型关系
 

@@ -13,9 +13,9 @@ description: 生成与解读 YIGO Form XML 中的面板和布局结构，支持 
 
 ## XSD 参考文件
 
-- 面板定义：[PanelDefine.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/PanelDefine.xsd)
-- 网格面板：[GridLayoutPanel.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/GridLayoutPanel.xsd)
-- 面板属性：[PanelAttributeGroupDefinition.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/attribute/PanelAttributeGroupDefinition.xsd)
+- 面板定义：[PanelDefine.xsd](../xsd/element/complex/PanelDefine.xsd)
+- 网格面板：[GridLayoutPanel.xsd](../xsd/element/complex/GridLayoutPanel.xsd)
+- 面板属性：[PanelAttributeGroupDefinition.xsd](../xsd/attribute/PanelAttributeGroupDefinition.xsd)
 
 ## Block 容器
 

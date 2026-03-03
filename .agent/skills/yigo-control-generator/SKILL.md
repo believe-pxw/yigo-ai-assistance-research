@@ -7,15 +7,15 @@ description: 生成与解读 YIGO Form XML 中的 UI 控件配置，支持 TextE
 
 ## 概述
 
-本 Skill 负责生成 YIGO Form XML 中的 **UI 控件**。YIGO 支持约 30 种控件类型，每种控件都有特定的属性和子元素。控件放置在面板（Panel）内。
+本 Skill 负责生成 YIGO Form XML 中的 **UI 控件**。YIGO 支持约 30 种控件类型，每种控件都有特定的属性和子元素，字典控件的ItemKey对应SAP中域的值表。控件放置在面板（Panel）内。
 
 > **所有控件内的表达式（公式）都必须用 `<![CDATA[]]>` 包裹**，包括 `OnClick`、`KeyEnter`、`CheckRule`、`ValueChanged`、`DefaultFormulaValue` 等。
 
 ## XSD 参考文件
 
-- 控件定义：[BaseControlDefinition.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/BaseControlDefinition.xsd)
-- 子元素定义：[BaseControlChildElementDefinition.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/BaseControlChildElementDefinition.xsd)
-- 属性组定义：[ControlAttributeGroupDefinition.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/attribute/ControlAttributeGroupDefinition.xsd)
+- 控件定义：[BaseControlDefinition.xsd](../xsd/element/complex/BaseControlDefinition.xsd)
+- 子元素定义：[BaseControlChildElementDefinition.xsd](../xsd/element/complex/BaseControlChildElementDefinition.xsd)
+- 属性组定义：[ControlAttributeGroupDefinition.xsd](../xsd/attribute/ControlAttributeGroupDefinition.xsd)
 
 ## 控件分类速查
 
@@ -198,7 +198,7 @@ description: 生成与解读 YIGO Form XML 中的 UI 控件配置，支持 TextE
 
 | 专有属性 | 说明 |
 |----------|------|
-| `ItemKey` | 字典项标识（关联 DomainDef） |
+| `ItemKey` | 字典项标识（关联 DomainDef），意味着有一个数据对象的key与ItemKey一致 |
 | `AllowMultiSelection` | 是否允许多选 |
 | `Editable` | 是否可编辑 |
 | `Independent` | 是否独立 |
