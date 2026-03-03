@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Form Key="Cond_PM_EquipmentQuery" Caption="设备查询界面" Version="50">
+    <DataSource>
+        <DataObject Key="Cond_PM_EquipmentQuery" Caption="设备查询界面" PrimaryType="Entity">
+            <TableCollection>
+                <Table Key="EPM_Cond_PM_EquipmentQuery_Head" Caption="设备查询界面的非持久化主表" SourceType="" Persist="false">
+                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/>
+                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/>
+                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
+                    <Column Key="MaterialID" Caption="物料" Persist="false" DataElementKey="MaterialID" IgnoreQuery="true"/>
+                    <Column Key="PlanningPlantID" Caption="计划工厂" Persist="false" DataElementKey="PlanningPlantID" IgnoreQuery="true"/>
+                    <Column Key="EquipmentDocNo" Caption="设备号" Persist="false" DataElementKey="EquipmentDocNo" IgnoreQuery="true"/>
+                    <Column Key="BusinessAreaID" Caption="业务范围" Persist="false" DataElementKey="BusinessAreaID" IgnoreQuery="true"/>
+                    <Column Key="LocationID" Caption="位置" Persist="false" DataElementKey="LocationID" IgnoreQuery="true"/>
+                    <Column Key="Cond_ModifyDate" Caption="修改日期" Persist="false" DataElementKey="ModifyDate" IgnoreQuery="true"/>
+                    <Column Key="SortField" Caption="分类字段" Persist="false" DataElementKey="SortField" IgnoreQuery="true"/>
+                    <Column Key="Creator" Caption="创建人" Persist="false" DataElementKey="OperatorID" IgnoreQuery="true"/>
+                    <Column Key="CostCenterID" Caption="成本中心" Persist="false" DataElementKey="CostCenterID" IgnoreQuery="true"/>
+                    <Column Key="ABCIndicatorID" Caption="ABC标识" Persist="false" IgnoreQuery="true" DataElementKey="ABCIndicatorID"/>
+                    <Column Key="AssetCardSOID" Caption="资产" Persist="false" IgnoreQuery="true" DataElementKey="AssetCardSOID"/>
+                    <Column Key="EquipmentCategoryID" Caption="设备种类" Persist="false" IgnoreQuery="true" DataElementKey="EquipmentCategoryID"/>
+                    <Column Key="PlantSectionID" Caption="工厂区域" Persist="false" IgnoreQuery="true" DataElementKey="PlantSectionID"/>
+                    <Column Key="Modifier" Caption="修改人" Persist="false" DataElementKey="OperatorID" IgnoreQuery="true"/>
+                    <Column Key="Room" Caption="房间" Persist="false" DataElementKey="Room" IgnoreQuery="true"/>
+                    <Column Key="WBSElementID" Caption="WBS元素" Persist="false" DataElementKey="WBSElementID" IgnoreQuery="true"/>
+                    <Column Key="WorkCenterID" Caption="工作中心" Persist="false" DataElementKey="TecoObjectWorkCenterID" IgnoreQuery="true"/>
+                    <Column Key="MaintPlantID" Caption="维护工厂" Persist="false" DataElementKey="MaintPlantID" IgnoreQuery="true"/>
+                    <Column Key="SupEquipmentSOID" Caption="高级设备" Persist="false" IgnoreQuery="true" DataElementKey="EquipmentSOID"/>
+                    <Column Key="CatalogProfileID" Caption="类别参数文件" Persist="false" IgnoreQuery="true" DataElementKey="CatalogProfileID"/>
+                    <Column Key="ClassificationID" Caption="分类" Persist="false" DataElementKey="ClassificationID" IgnoreQuery="true"/>
+                    <Column Key="CompanyCodeID" Caption="公司代码" Persist="false" DataElementKey="CompanyCodeID" IgnoreQuery="true"/>
+                    <Column Key="Cond_CreateDate" Caption="创建日期" Persist="false" DataElementKey="CreateDate" IgnoreQuery="true"/>
+                    <Column Key="SerialNumber" Caption="序列号" Persist="false" DataElementKey="SerialNumber" IgnoreQuery="true"/>
+                    <Column Key="StructTypeID" Caption="构造类型" Persist="false" DataElementKey="StructTypeID" IgnoreQuery="true"/>
+                    <Column Key="FunctionalLocationSOID" Caption="功能位置" Persist="false" IgnoreQuery="true" DataElementKey="FunctionalLocationSOID"/>
+                    <Column Key="EquipmentDescription" Caption="设备描述" Persist="false" DataElementKey="EquipmentNotes" IgnoreQuery="true"/>
+                    <Column Key="CategoryTypeID" Caption="类别种类" Persist="false" IgnoreQuery="true" DataElementKey="CategoryTypeID"/>
+                    <Column Key="PlannerGroupID" Caption="计划员组" Persist="false" IgnoreQuery="true" DataElementKey="PMPlannerGroupID"/>
+                    <Column Key="TechnicalObjectID" Caption="技术对象类型" Persist="false" IgnoreQuery="true" DataElementKey="TechnicalObjectID"/>
+                </Table>
+            </TableCollection>
+        </DataObject>
+    </DataSource>
+    <Body PopHeight="800px" PopWidth="600px">
+        <Block>
+            <FlexFlowLayoutPanel Key="root">
+                <GridLayoutPanel Key="main_container" Height="100%" Padding="8px" OverflowY="Auto">
+                    <TextEditor Key="EquipmentDescription" Caption="设备描述" X="0" Y="2" Visible="true" Enable="true" MaxLength="100" Trim="true" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="EquipmentDescription"/>
+                        <Condition ColumnKey="EquipmentNotes" TableKey="EPM_Equipment_Query" CondSign="like" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </TextEditor>
+                    <Dict Key="EquipmentCategoryID" Caption="设备种类" LabelType="M" X="1" Y="1" Visible="true" Enable="true" ItemKey="PM_EquipmentCategory" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="EquipmentCategoryID"/>
+                        <Condition ColumnKey="EquipmentCategoryID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <TextEditor Key="EquipmentDocNo" Caption="设备号" X="0" Y="1" Visible="true" Enable="true" MaxLength="100" Trim="true" Case="Upper" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="EquipmentDocNo"/>
+                        <Condition ColumnKey="DocumentNumber" TableKey="EPM_Equipment_Query" CondSign="like" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </TextEditor>
+                    <Dict Key="TechnicalObjectID" Caption="技术对象类型" LabelType="L" X="1" Y="2" ItemKey="PM_TechnicalObject" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="TechnicalObjectID"/>
+                        <Condition ColumnKey="TechnicalObjectID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="MaintPlantID" Caption="维护工厂" LabelType="M" X="0" Y="6" ItemKey="Plant" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="MaintPlantID"/>
+                        <Condition ColumnKey="MaintPlantID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="WorkCenterID" Caption="工作中心" LabelType="M" X="1" Y="9" ItemKey="WorkCenter" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="WorkCenterID"/>
+                        <Condition ColumnKey="WorkCenterID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="CompanyCodeID" Caption="公司代码" LabelType="M" X="0" Y="8" ItemKey="CompanyCode" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="CompanyCodeID"/>
+                        <Condition ColumnKey="OrgCompanyCodeID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="BusinessAreaID" Caption="业务范围" LabelType="M" X="0" Y="9" ItemKey="BusinessArea" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="BusinessAreaID"/>
+                        <Condition ColumnKey="BusinessAreaID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="AssetCardSOID" Caption="资产" LabelType="M" X="0" Y="10" ItemKey="AM_AssetCard__Dic" StateMask="Enable|Disable|Discard" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="AssetCardSOID"/>
+                        <Condition ColumnKey="AssetCardSOID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="CostCenterID" Caption="成本中心" LabelType="M" X="1" Y="8" ItemKey="CostCenter" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="CostCenterID"/>
+                        <Condition ColumnKey="CostCenterID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="PlanningPlantID" Caption="计划工厂" LabelType="M" X="0" Y="11" ItemKey="Plant" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="PlanningPlantID"/>
+                        <Condition ColumnKey="PlanningPlantID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="PlannerGroupID" Caption="计划员组" LabelType="S" X="1" Y="11" ItemKey="PM_PlannerGroup" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="PlannerGroupID"/>
+                        <Condition ColumnKey="PlannerGroupID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                        <ItemFilter>
+                            <Filter Key="Filter" Impl="com.bokesoft.yes.erp.condition.Filter" Type="Custom">
+                                <FilterValue Index="1" ParaValue="IIF(PlanningPlantID&gt;0,'PLANTID='&amp;SqlPara(PlanningPlantID),'1=2')"/>
+                            </Filter>
+                        </ItemFilter>
+                    </Dict>
+                    <Dict Key="MaterialID" Caption="物料" LabelType="M" X="0" Y="4" ItemKey="Material" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="MaterialID"/>
+                        <Condition ColumnKey="MaterialID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <TextEditor Key="SerialNumber" Caption="序列号" LabelType="M" X="1" Y="4" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="SerialNumber"/>
+                        <Condition ColumnKey="SerialNumber" TableKey="EPM_Equipment_Query" CondSign="like" UseAdvancedQuery="true"/>
+                    </TextEditor>
+                    <Dict Key="CatalogProfileID" Caption="类别参数文件" LabelType="M" X="0" Y="5" ItemKey="QM_CatalogProfile" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="CatalogProfileID"/>
+                        <Condition ColumnKey="CatalogProfileID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="LocationID" Caption="位置" LabelType="M" X="1" Y="6" ItemKey="Location" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="LocationID"/>
+                        <Condition ColumnKey="LocationID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <TextEditor Key="Room" Caption="房间" LabelType="M" X="0" Y="7" Case="Upper" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="Room"/>
+                        <Condition ColumnKey="Room" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </TextEditor>
+                    <Dict Key="PlantSectionID" Caption="工厂区域" LabelType="M" X="1" Y="7" ItemKey="PM_PlantSection" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="PlantSectionID"/>
+                        <Condition ColumnKey="PlantSectionID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                        <ItemFilter>
+                            <Filter Key="Filter" Impl="com.bokesoft.yes.erp.condition.Filter" Type="Custom">
+                                <FilterValue Index="1" ParaValue="IIF(MaintPlantID &gt; 0,'PlantID = '&amp;SqlPara(MaintPlantID),'1=2')"/>
+                            </Filter>
+                        </ItemFilter>
+                    </Dict>
+                    <Dict Key="Creator" Caption="创建人" X="0" Y="15" ItemKey="Operator" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="Creator"/>
+                        <Condition ColumnKey="Creator" TableKey="EPM_Equipment_Query" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <UTCDatePicker Key="Cond_CreateDate" Caption="创建日期" X="1" Y="15" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="Cond_CreateDate"/>
+                        <Condition TableKey="EPM_Equipment_Query" CondSign="custom" LoadHistoryInput="true" UseAdvancedQuery="true">
+                            <CustomCondition Condition="Cond_CreateDate &gt; 0" Filter="CAST(CreateTime as DATE) = ${Cond_CreateDate_Para1}">
+                                <CustomConditionPara Key="Cond_CreateDate_Para1" Formula="Replace(ToString(ConditionPara('Cond_CreateDate')), '-', '')"/>
+                            </CustomCondition>
+                            <CustomCondition Condition="1 == 1" Filter=" 1 = 1 "/>
+                        </Condition>
+                    </UTCDatePicker>
+                    <Dict Key="Modifier" Caption="修改人" X="0" Y="16" ItemKey="Operator" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="Modifier"/>
+                        <Condition ColumnKey="Modifier" TableKey="EPM_Equipment_Query" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <UTCDatePicker Key="Cond_ModifyDate" Caption="修改日期" LabelType="M" X="1" Y="16" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="Cond_ModifyDate"/>
+                        <Condition TableKey="EPM_Equipment_Query" CondSign="custom" LoadHistoryInput="true" UseAdvancedQuery="true">
+                            <CustomCondition Condition="Cond_ModifyDate &gt; 0" Filter="CAST(ModifyTime as DATE) = ${Cond_ModifyDate_Para1}">
+                                <CustomConditionPara Key="Cond_ModifyDate_Para1" Formula="Replace(ToString(ConditionPara('Cond_ModifyDate')), '-', '')"/>
+                            </CustomCondition>
+                            <CustomCondition Condition="1 == 1" Filter=" 1 = 1 "/>
+                        </Condition>
+                    </UTCDatePicker>
+                    <Dict Key="FunctionalLocationSOID" Caption="功能位置" LabelType="M" X="1" Y="5" ItemKey="PM_FunctionalLocation__Dic" StateMask="Enable|Disable|Discard" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="FunctionalLocationSOID"/>
+                        <Condition ColumnKey="FunctionalLocationSOID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="SupEquipmentSOID" Caption="高级设备" X="1" Y="10" ItemKey="PM_Equipment__Dic" StateMask="Enable|Disable|Discard" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="SupEquipmentSOID"/>
+                        <Condition ColumnKey="EquipmentSOID" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="ClassificationID" Caption="分类" X="1" Y="3" ItemKey="Classification" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="ClassificationID"/>
+                        <Condition ColumnKey="ClassificationID" TableKey="EPM_Equipment_Query" CondSign="custom" UseAdvancedQuery="true" LoadHistoryInput="true">
+                            <CustomCondition Condition="ConditionPara(&quot;ClassificationID&quot;) &gt; 0" Filter="ClassificationID in (select ClassificationIDs from EGS_Object_Classification oc where oc.soid = EPM_Equipment_Query.oid and oc.ClassificationID=${ClassificationID})">
+                                <CustomConditionPara Key="ClassificationID" Formula="ConditionPara(&quot;ClassificationID&quot;) "/>
+                            </CustomCondition>
+                            <CustomCondition Condition="1==1"/>
+                        </Condition>
+                        <ItemFilter>
+                            <Filter Key="Filter" Type="FieldValue">
+                                <FilterValue Index="1" FieldKey="CategoryTypeID" RefValue="CategoryTypeID" Type="Field" DataType="Long"/>
+                            </Filter>
+                        </ItemFilter>
+                    </Dict>
+                    <Dict Key="CategoryTypeID" Caption="类别种类" LabelType="M" X="0" Y="3" Visible="true" ItemKey="MM_CategoryType" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="CategoryTypeID"/>
+                        <Condition ColumnKey="CategoryTypeID" TableKey="EPM_Equipment_Query" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <TextEditor Key="SortField" Caption="分类字段" LabelType="M" X="1" Y="12" OneTimeCompute="true">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="SortField"/>
+                        <Condition ColumnKey="SortField" TableKey="EPM_Equipment_Query" CondSign="=" UseAdvancedQuery="true"/>
+                    </TextEditor>
+                    <Dict Key="WBSElementID" Caption="WBS元素" LabelType="M" X="0" Y="12" Visible="true" ItemKey="PS_WBSElement" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="WBSElementID"/>
+                        <Condition ColumnKey="WBSElementID" TableKey="EPM_Equipment_Query" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="StructTypeID" Caption="构造类型" LabelType="M" X="0" Y="13" ItemKey="Material" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="StructTypeID"/>
+                        <Condition ColumnKey="StructTypeID" TableKey="EPM_Equipment_Query" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                    </Dict>
+                    <Dict Key="ABCIndicatorID" Caption="ABC标识" LabelType="M" X="1" Y="13" ItemKey="PM_ABCIndicator" OneTimeCompute="true" StateMask="Enable|Disable|Discard">
+                        <DataBinding TableKey="EPM_Cond_PM_EquipmentQuery_Head" ColumnKey="ABCIndicatorID"/>
+                        <Condition ColumnKey="ABCIndicatorID" TableKey="EPM_Equipment_Query" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                        <ItemFilter ItemKey="PM_ABCIndicator">
+                            <Filter Key="Filter" Impl="com.bokesoft.yes.erp.condition.Filter" Type="Custom">
+                                <FilterValue Index="1" ParaValue="' ABCIndicatorType = ' + SqlPara(2)"/>
+                            </Filter>
+                        </ItemFilter>
+                    </Dict>
+                    <Label Key="HeadLabel1" Caption="系统信息" X="0" Y="14" Class="erp-group-title" XSpan="2">
+                        <DataBinding/>
+                    </Label>
+                    <Label Key="HeadLabel2" Caption="设备选择" X="0" Y="0" Class="erp-group-title" XSpan="2">
+                        <DataBinding/>
+                    </Label>
+                    <RowDefCollection RowGap="24">
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                    </RowDefCollection>
+                    <ColumnDefCollection ColumnGap="16">
+                        <ColumnDef Width="50%"/>
+                        <ColumnDef Width="50%"/>
+                    </ColumnDefCollection>
+                </GridLayoutPanel>
+                <GridLayoutPanel Key="ButtonPanel" Caption="ButtionPanel" Height="100px" Padding="8px" TopPadding="24px">
+                    <Button Key="OK" Caption="确定" X="3" Y="1" Enable="true" Type="Primary">
+                        <OnClick>
+                            <![CDATA[UICheck();
+DealCondition(true);
+parent.LoadData();
+Close('OK');]]>
+                        </OnClick>
+                    </Button>
+                    <Button Key="Cancel" Caption="取消" X="2" Y="1" Enable="true" Type="Normal">
+                        <OnClick>
+                            <![CDATA[Close();]]>
+                        </OnClick>
+                    </Button>
+                    <Embed Key="UserFavorite" Caption="查询变式" FormKey="V_Favorite_Impl" RootKey="Favorite_ImplFavoriteGridLayoutPanel" IncludeDataTable="false" X="0" Y="0" YSpan="2"/>
+                    <RowDefCollection>
+                        <RowDef Height="32px"/>
+                        <RowDef Height="32px"/>
+                    </RowDefCollection>
+                    <ColumnDefCollection ColumnGap="16">
+                        <ColumnDef Width="340px"/>
+                        <ColumnDef Width="100%"/>
+                        <ColumnDef Width="80px"/>
+                        <ColumnDef Width="80px"/>
+                    </ColumnDefCollection>
+                </GridLayoutPanel>
+            </FlexFlowLayoutPanel>
+        </Block>
+    </Body>
+</Form>

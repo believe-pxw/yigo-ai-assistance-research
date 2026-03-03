@@ -9,10 +9,27 @@ description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、Data
 
 本 Skill 负责生成 YIGO Form XML 的**顶层骨架结构**。Form 是 YIGO 系统中窗口配置的根对象，包含数据源、操作集合、脚本集合、窗体等核心子元素。
 
+## CDATA 规约
+
+> **所有 XML 元素内的表达式（公式）都必须用 `<![CDATA[]]>` 包裹**，避免 `&`, `<`, `>` 等特殊字符导致 XML 解析错误。
+
+```xml
+<!-- 正确 -->
+<OnLoad><![CDATA[Macro_LoadObject()]]></OnLoad>
+<Macro Key="m"><![CDATA[IIF(a>0 && b<10, true, false)]]></Macro>
+<CheckRule><![CDATA[IIF(Code=='', '请输入代码', true)]]></CheckRule>
+
+<!-- 错误 -->
+<OnLoad>IIF(a>0 && b<10, true, false)</OnLoad>
+```
+
+**适用范围**：`OnLoad`, `OnClose`, `OnPostShow`, `Action`, `ExceptionHandler`, `Macro` 内容, `CheckRule`, `ValueChanged`, `DefaultFormulaValue`, `OnClick`, `RowDblClick`, `Statement`, `FormulaItems`, `OnRowDelete` 等一切公式体。
+
 ## XSD 参考文件
 
 - 主文件：[Form.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/Form.xsd)
 - 枚举定义：[FormDefine.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/simple/FormDefine.xsd)
+- 参考表单：[referenceForm/](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/referenceForm/)
 
 ## Form XML 顶层结构
 
@@ -41,14 +58,14 @@ description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、Data
     <!-- 5. 导航条（移动端，可选） -->
     <NavigationBar />
     
-    <!-- 6. 事件钩子（可选） -->
-    <OnLoad>公式内容</OnLoad>
-    <OnClose>公式内容</OnClose>
-    <OnPostShow>公式内容</OnPostShow>
+    <!-- 6. 事件钩子（可选，内容用 CDATA 包裹） -->
+    <OnLoad><![CDATA[公式内容]]></OnLoad>
+    <OnClose><![CDATA[公式内容]]></OnClose>
+    <OnPostShow><![CDATA[公式内容]]></OnPostShow>
     
     <!-- 7. 宏公式集合（可选） -->
     <MacroCollection>
-        <Macro Key="宏标识" Args="参数">公式内容</Macro>
+        <Macro Key="宏标识" Args="参数"><![CDATA[公式内容]]></Macro>
     </MacroCollection>
     
     <!-- 8. 表单关系集合（复合字典用，可选） -->
@@ -102,16 +119,6 @@ description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、Data
 | `New` | 新增状态 |
 | `Edit` | 修改状态 |
 
-## Platform 枚举值
-
-| 值 | 说明 |
-|----|------|
-| `PC` | 电脑客户端 |
-| `Android` | 安卓移动端 |
-| `IOS` | iOS 移动端 |
-| `H5` | H5 网页 |
-| `Mobile` | 所有移动端 |
-| `All` | 所有平台 |
 
 ## DataSource 节点
 
@@ -149,53 +156,23 @@ description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、Data
 2. **Key 长度限制**：不超过 50 字符
 3. **子元素顺序**：`DataSource → OperationCollection → ScriptCollection → Body → NavigationBar → OnLoad → OnClose → OnPostShow → MacroCollection → FormRelationCollection`
 
-## 使用示例
+## 表单模板
 
-### 示例 1：标准实体表单（采购订单）
+根据需要生成的表单类型，读取对应模板文件获取完整骨架结构：
 
-```xml
-<Form Key="PurchaseOrder" Caption="采购订单" FormType="Entity" InitState="Default" Version="6.1" Platform="PC">
-    <DataSource RefObjectKey="PurchaseOrder" />
-    <OperationCollection>
-        <!-- 由 yigo-operation-script skill 生成 -->
-    </OperationCollection>
-    <Body>
-        <Block Key="mainBlock" Caption="主区域">
-            <!-- 由 yigo-panel-layout skill 生成 -->
-        </Block>
-    </Body>
-</Form>
-```
+| 模板 | 文件 | 适用场景 |
+|------|------|---------|
+| 字典表单 | [dict-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/dict-form.md) | `FormType="Dict"` + SplitPanel（表头 + 明细表）+ 系统信息页签 |
+| 后台配置表 | [backend-config-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/backend-config-form.md) | `FormType="Entity"` + 纯 Detail Grid，无表头，OnLoad 加载 |
+| 单界面报表 | [single-report-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/single-report-form.md) | SplitPanel（条件区 + 结果 Grid），控件带 `Condition` 子元素 |
+| 双表单报表 | [dual-report-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/dual-report-form.md) | 条件表单 + 结果表单，`ERPShowModal` 弹出条件，`parent.LoadData()` 回传 |
 
-### 示例 2：字典表单
 
-```xml
-<Form Key="CurrencyDict" Caption="币别字典" FormType="Dict" InitState="Default" Version="6.1">
-    <DataSource RefObjectKey="CurrencyDict" />
-    <Body>
-        <Block Key="mainBlock">
-            <!-- 面板布局 -->
-        </Block>
-    </Body>
-</Form>
-```
-
-### 示例 3：View 表单（叙时簿）
-
-```xml
-<Form Key="PurchaseOrderView" Caption="采购订单叙时簿" FormType="View" ViewKey="PurchaseOrder" InitState="Default" Version="6.1">
-    <DataSource RefObjectKey="PurchaseOrderView" />
-    <Body>
-        <Block Key="mainBlock">
-            <!-- 叙时簿通常包含一个 Grid 表格 -->
-        </Block>
-    </Body>
-</Form>
-```
 
 ## 与其他 Skill 的配合
 
-- **Body > Block** 内的面板/控件  →  使用 `yigo-panel-layout` 和 `yigo-control-generator`
+- **Body > Block** 内的面板/控件 → 使用 `yigo-panel-layout` 和 `yigo-control-generator`
 - **DataSource > DataObject** → 使用 `yigo-dataobject-generator`
 - **OperationCollection** → 使用 `yigo-operation-script`
 - **OnLoad/OnClose 等事件内容** → 使用 `yigo-expression-helper`
+- **抬头控件布局** → 优先使用 `GridLayoutPanel`（X/Y 精确定位），参考 `yigo-panel-layout`

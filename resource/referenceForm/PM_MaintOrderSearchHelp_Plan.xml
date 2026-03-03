@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Form Key="PM_MaintOrderSearchHelp_Plan" Caption="预防性维护订单" FormType="Entity" Version="84">
+    <DataSource>
+        <DataObject Key="PM_MaintOrderSearchHelp_Plan" Caption="预防性维护订单" PrimaryType="Entity" Version="1">
+            <TableCollection>
+                <Table Key="EPM_MaintOrderSearchHelp_Plan" Caption="维护订单单据字典主表" TableMode="Detail" SourceType="Query" Persist="false" OrderBy="'DocumentNumber DESC'">
+                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/>
+                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/>
+                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
+                    <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/>
+                    <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/>
+                    <Column Key="ClientID" Caption="集团" DataElementKey="ClientID"/>
+                    <Column Key="DocumentNumber" Caption="订单编号" DefaultValue="" SortType="Desc" DataElementKey="DocumentNumber"/>
+                    <Column Key="Notes" Caption="描述" DefaultValue="" DataElementKey="OrderText_2000"/>
+                    <Column Key="OrderTypeID" Caption="单据类型" DataElementKey="PM_OrderTypeID"/>
+                    <Column Key="MaintPlantID" Caption="维护工厂" DataElementKey="MaintPlantID"/>
+                    <Column Key="SystemStatusText" Caption="系统状态" DataElementKey="SystemStatusText"/>
+                    <Column Key="CreatedOnDate" Caption="创建日期" DataElementKey="CreatedOnDate"/>
+                    <Column Key="MaintenancePlanSOID" Caption="维护计划" DataElementKey="MaintenancePlanSOID"/>
+                    <Statement Type="Formula">
+                        <![CDATA['select OID,SOID,POID,VERID,DVERID,ClientID,DocumentNumber,OrderText as Notes, OrderTypeID,MaintPlantID,SystemStatusText,CreatedOnDate,MaintenancePlanSOID from EPM_MaintenanceOrderHead ' + Macro_GetWhere()]]>
+                    </Statement>
+                </Table>
+                <Table Key="EPM_MaintOrderSearchHelp_Plan_Head" Caption="维护订单查询界面的非持久化主表" SourceType="" Persist="false">
+                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/>
+                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/>
+                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
+                    <Column Key="Cond_DocumentNumber" Caption="订单" Persist="false" DataElementKey="DocumentNumber" IgnoreQuery="true"/>
+                    <Column Key="Cond_DocumentTypeID" Caption="单据类型" Persist="false" DataElementKey="PM_OrderTypeID" IgnoreQuery="true"/>
+                    <Column Key="Cond_MaintPlantID" Caption="维护工厂" Persist="false" DataElementKey="MaintPlantID" IgnoreQuery="true"/>
+                    <Column Key="Cond_Notes" Caption="名称" Persist="false" DataElementKey="OrderText_2000" IgnoreQuery="true"/>
+                    <Column Key="Cond_CreatedOnDate" Caption="创建日期" Persist="false" DataElementKey="CreatedOnDate" IgnoreQuery="true"/>
+                    <Column Key="Cond_MaintenancePlanSOID" Caption="维护计划" Persist="false" DataElementKey="MaintenancePlanSOID" IgnoreQuery="true"/>
+                </Table>
+            </TableCollection>
+        </DataObject>
+    </DataSource>
+    <OperationCollection>
+        <Operation Key="Query" Caption="查询" Enable="true">
+            <Action>
+                <![CDATA[Macro_UIOpt_BillQuery_Exp()]]>
+            </Action>
+        </Operation>
+        <Operation Key="UIClose" Caption="关闭" RefKey="UIClose"/>
+    </OperationCollection>
+    <Body PopHeight="700px" PopWidth="635px">
+        <Block>
+            <FlexFlowLayoutPanel Key="root">
+                <ToolBar Key="ToolBar1" Caption="ToolBar1" Height="pref">
+                    <ToolBarItemCollection/>
+                </ToolBar>
+                <SplitPanel Key="main_container" Orientation="Vertical" Height="100%">
+                    <GridLayoutPanel Key="MaintOrderSearchHelpGridLayoutPanel" Caption="维护订单字典查询" Padding="8px" OverflowY="Auto" TopPadding="24px" Visible="true">
+                        <Dict Key="Cond_MaintPlantID" Caption="维护工厂" LabelType="M" X="0" Y="0" ItemKey="Plant">
+                            <DataBinding TableKey="EPM_MaintOrderSearchHelp_Plan_Head" ColumnKey="Cond_MaintPlantID"/>
+                            <Condition ColumnKey="MaintPlantID" TableKey="EPM_MaintOrderSearchHelp_Plan" CondSign="=" UseAdvancedQuery="true"/>
+                        </Dict>
+                        <Dict Key="Cond_MaintenancePlanSOID" Caption="维护计划" LabelType="M" X="1" Y="0" ItemKey="PM_MaintenancePlan__Dic" StateMask="Enable|Disable|Discard">
+                            <DataBinding TableKey="EPM_MaintOrderSearchHelp_Plan_Head" ColumnKey="Cond_MaintenancePlanSOID"/>
+                            <Condition ColumnKey="MaintenancePlanSOID" TableKey="EPM_MaintOrderSearchHelp_Plan" CondSign="=" UseAdvancedQuery="true"/>
+                        </Dict>
+                        <Dict Key="Cond_DocumentTypeID" Caption="订单类型" LabelType="M" X="2" Y="0" Visible="true" Enable="true" ItemKey="PM_OrderType" OneTimeCompute="true">
+                            <DataBinding TableKey="EPM_MaintOrderSearchHelp_Plan_Head" ColumnKey="Cond_DocumentTypeID"/>
+                            <Condition ColumnKey="OrderTypeID" TableKey="EPM_MaintOrderSearchHelp_Plan" CondSign="=" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+                        </Dict>
+                        <TextEditor Key="Cond_DocumentNumber" Caption="维护订单" X="0" Y="1" Visible="true" Enable="true" Case="Upper" MaxLength="50" OneTimeCompute="true" Trim="true">
+                            <DataBinding TableKey="EPM_MaintOrderSearchHelp_Plan_Head" ColumnKey="Cond_DocumentNumber"/>
+                            <Condition ColumnKey="DocumentNumber" TableKey="EPM_MaintOrderSearchHelp_Plan" CondSign="=" UseAdvancedQuery="true"/>
+                        </TextEditor>
+                        <UTCDatePicker Key="Cond_CreatedOnDate" Caption="创建日期" LabelType="M" X="1" Y="1">
+                            <DataBinding TableKey="EPM_MaintOrderSearchHelp_Plan_Head" ColumnKey="Cond_CreatedOnDate"/>
+                            <Condition ColumnKey="CreatedOnDate" TableKey="EPM_MaintOrderSearchHelp_Plan" CondSign="=" UseAdvancedQuery="true"/>
+                        </UTCDatePicker>
+                        <TextEditor Key="Cond_Notes" Caption="名称" LabelType="M" X="2" Y="1">
+                            <DataBinding TableKey="EPM_MaintOrderSearchHelp_Plan_Head" ColumnKey="Cond_Notes"/>
+                            <Condition ColumnKey="Notes" TableKey="EPM_MaintOrderSearchHelp_Plan" CondSign="like" UseAdvancedQuery="true"/>
+                        </TextEditor>
+                        <RowDefCollection RowGap="24">
+                            <RowDef Height="32px"/>
+                            <RowDef Height="32px"/>
+                        </RowDefCollection>
+                        <ColumnDefCollection ColumnGap="16">
+                            <ColumnDef Width="33%"/>
+                            <ColumnDef Width="33%"/>
+                            <ColumnDef Width="34%"/>
+                        </ColumnDefCollection>
+                    </GridLayoutPanel>
+                    <Grid Key="MaintenanceOrderQueryResultGrid" Caption="维护订单查询" Enable="false" SerialSeq="true" DisabledOption="delete" Padding="8px" PageLoadType="DB">
+                        <GridColumnCollection>
+                            <GridColumn Key="SOID" Caption="SOID" Visible="false" Width="80px" Sortable="true"/>
+                            <GridColumn Key="DocumentNumber" Caption="维护订单" Width="100px" Sortable="true"/>
+                            <GridColumn Key="MaintPlantID" Caption="维护工厂" LabelType="M" Width="80px"/>
+                            <GridColumn Key="OrderTypeID" Caption="订单类型" LabelType="M" Width="80px" Sortable="true"/>
+                            <GridColumn Key="MaintenancePlanSOID" Caption="维护计划" LabelType="H" Width="80px"/>
+                            <GridColumn Key="Notes" Caption="名称" LabelType="M" Width="80px" Sortable="true"/>
+                            <GridColumn Key="CreatedOnDate" Caption="创建日期" LabelType="H" Width="80px"/>
+                            <GridColumn Key="SystemStatusText" Caption="系统状态" LabelType="H" Width="80px"/>
+                        </GridColumnCollection>
+                        <GridRowCollection>
+                            <GridRow Key="MaintenanceOrderQueryResultGridRow" TableKey="EPM_MaintOrderSearchHelp_Plan">
+                                <GridCell Key="SOID" Caption="SOID" CellType="NumberEditor" Scale="0">
+                                    <DataBinding ColumnKey="SOID"/>
+                                </GridCell>
+                                <GridCell Key="DocumentNumber" Caption="维护订单" CellType="TextEditor" MaxLength="50" Trim="true">
+                                    <DataBinding ColumnKey="DocumentNumber"/>
+                                </GridCell>
+                                <GridCell Key="MaintPlantID" Caption="维护工厂" CellType="Dict" ItemKey="Plant">
+                                    <DataBinding ColumnKey="MaintPlantID"/>
+                                </GridCell>
+                                <GridCell Key="OrderTypeID" Caption="订单类型" CellType="Dict" ItemKey="PM_OrderType">
+                                    <DataBinding ColumnKey="OrderTypeID"/>
+                                </GridCell>
+                                <GridCell Key="MaintenancePlanSOID" Caption="维护计划" CellType="Dict" ItemKey="PM_MaintenancePlan__Dic" StateMask="Enable|Disable|Discard">
+                                    <DataBinding ColumnKey="MaintenancePlanSOID"/>
+                                </GridCell>
+                                <GridCell Key="Notes" Caption="名称" CellType="TextEditor" MaxLength="100" Trim="true">
+                                    <DataBinding ColumnKey="Notes"/>
+                                </GridCell>
+                                <GridCell Key="CreatedOnDate" Caption="创建日期" CellType="UTCDatePicker">
+                                    <DataBinding ColumnKey="CreatedOnDate"/>
+                                </GridCell>
+                                <GridCell Key="SystemStatusText" Caption="系统状态" CellType="TextEditor" MaxLength="100">
+                                    <DataBinding ColumnKey="SystemStatusText"/>
+                                </GridCell>
+                            </GridRow>
+                        </GridRowCollection>
+                        <RowDblClick>
+                            <![CDATA[ReturnSearchHelpResult(SOID, DocumentNumber);]]>
+                        </RowDblClick>
+                    </Grid>
+                    <SplitSize Size="125px"/>
+                    <SplitSize Size="100%"/>
+                </SplitPanel>
+            </FlexFlowLayoutPanel>
+        </Block>
+    </Body>
+    <OnLoad>
+        <![CDATA[Macro_LoadObject()]]>
+    </OnLoad>
+    <MacroCollection>
+        <Macro Key="Macro_UIOpt_BillQuery_Exp">
+            <![CDATA[UICheck();DealCondition();Macro_LoadObject();]]>
+        </Macro>
+        <Macro Key="Macro_GetWhere">
+            <![CDATA[' where 1=1 ' + Macro_GetDictFilter() + Macro_GetItemFilter()]]>
+        </Macro>
+        <Macro Key="Macro_GetDictFilter">
+            <![CDATA[var dictFilter = Macro_GetFilterOnSearchHelp(); IIF(Length(dictFilter)>0, ' and '&dictFilter&'','')]]>
+        </Macro>
+        <Macro Key="Macro_GetItemFilter">
+            <![CDATA[IIF(Length(GetPara('ItemFilter'))>0, ' and '&GetPara('ItemFilter')&'', '');]]>
+        </Macro>
+    </MacroCollection>
+</Form>

@@ -9,6 +9,8 @@ description: 生成 YIGO Form XML 中的面板和布局结构，支持 GridLayou
 
 本 Skill 负责生成 YIGO Form XML 中 **Body > Block** 下的面板和布局结构。YIGO 支持 18 种面板类型，面板之间可以嵌套组合，面板内可以放置 UI 控件或子面板。
 
+> **抬头控件优先使用 `GridLayoutPanel`**（X/Y 精确定位），而不是 `FlexFlowLayoutPanel` 或 `FlexGridLayoutPanel`。参考 PM_Strategy.xml 和 Cond_PM_EquipmentQuery.xml 的实际用法。
+
 ## XSD 参考文件
 
 - 面板定义：[PanelDefine.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/PanelDefine.xsd)
@@ -221,17 +223,30 @@ Block 是 Body 下的直接子元素，用于组织面板和控件。
 
 ```xml
 <Body>
-    <Block Key="mainBlock">
-        <SplitPanel Key="mainSplit" Orientation="Vertical">
-            <!-- 表头区域 -->
-            <FlexGridLayoutPanel Key="headerPanel" Caption="表头" ColumnCount="3">
-                <!-- 表头控件由 yigo-control-generator 生成 -->
-            </FlexGridLayoutPanel>
-            <!-- 明细区域 -->
-            <Grid Key="gridDetail">
-                <!-- 表格由 yigo-grid-generator 生成 -->
-            </Grid>
-        </SplitPanel>
+    <Block>
+        <FlexFlowLayoutPanel Key="root">
+            <SplitPanel Key="mainSplit" Orientation="Vertical">
+                <!-- 表头区域：优先使用 GridLayoutPanel -->
+                <GridLayoutPanel Key="headerPanel" Caption="表头" Padding="8px" OverflowY="Auto" TopPadding="24px">
+                    <!-- 表头控件由 yigo-control-generator 生成，用 X/Y 定位 -->
+                    <RowDefCollection RowGap="24">
+                        <RowDef Height="32px"/>
+                    </RowDefCollection>
+                    <ColumnDefCollection ColumnGap="16">
+                        <ColumnDef Width="190px"/>
+                        <ColumnDef Width="30px"/>
+                        <ColumnDef Width="190px"/>
+                        <ColumnDef Width="30px"/>
+                    </ColumnDefCollection>
+                </GridLayoutPanel>
+                <!-- 明细区域 -->
+                <Grid Key="gridDetail" Padding="8px">
+                    <!-- 表格由 yigo-grid-generator 生成 -->
+                </Grid>
+                <SplitSize Size="425px"/>
+                <SplitSize Size="100%"/>
+            </SplitPanel>
+        </FlexFlowLayoutPanel>
     </Block>
 </Body>
 ```

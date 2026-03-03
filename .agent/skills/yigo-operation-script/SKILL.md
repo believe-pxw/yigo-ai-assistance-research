@@ -9,6 +9,8 @@ description: 生成 YIGO Form XML 中的 OperationCollection（操作集合）�
 
 本 Skill 负责生成 YIGO Form XML 中的**操作定义（OperationCollection）**、**脚本集合（ScriptCollection）**和**宏公式集合（MacroCollection）**。这三个组件定义了表单的业务逻辑行为。
 
+> **所有 `Action`、`ExceptionHandler`、`Macro` 内容、`OnLoad`/`OnClose` 等公式体都必须用 `<![CDATA[]]>` 包裹**。
+
 ## XSD 参考文件
 
 - 操作集合：[OperationCollection.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/OperationCollection.xsd)
@@ -26,22 +28,22 @@ description: 生成 YIGO Form XML 中的 OperationCollection（操作集合）�
 ```xml
 <OperationCollection>
     <!-- 直接的操作 -->
-    <Operation Key="optKey" Caption="操作名称" Icon="icon.png" ShortCuts="Ctrl+S">
-        <Action>操作执行的公式内容</Action>
-        <ExceptionHandler>异常处理公式</ExceptionHandler>
+    <Operation Key="optKey" Caption="操作名称">
+        <Action><![CDATA[操作执行的公式内容]]></Action>
+        <ExceptionHandler><![CDATA[异常处理公式]]></ExceptionHandler>
         <!-- 子操作（可嵌套） -->
         <Operation Key="subOpt" Caption="子操作">
-            <Action>子操作公式</Action>
+            <Action><![CDATA[子操作公式]]></Action>
         </Operation>
     </Operation>
     
     <!-- 分组的操作集合 -->
     <OperationCollection Key="groupKey" Caption="操作分组">
         <Operation Key="opt1" Caption="操作1">
-            <Action>公式</Action>
+            <Action><![CDATA[公式]]></Action>
         </Operation>
         <Operation Key="opt2" Caption="操作2">
-            <Action>公式</Action>
+            <Action><![CDATA[公式]]></Action>
         </Operation>
     </OperationCollection>
 </OperationCollection>
@@ -116,9 +118,9 @@ Form 中有多个使用脚本类型的地方：
 这些元素都使用 `yigo-BaseScript2` 类型（mixed content，脚本内容直接写在元素体内）：
 
 ```xml
-<OnLoad>初始化公式内容</OnLoad>
-<OnClick>按钮点击公式</OnClick>
-<RowDblClick>SetFormState("Edit")</RowDblClick>
+<OnLoad><![CDATA[初始化公式内容]]></OnLoad>
+<OnClick><![CDATA[按钮点击公式]]></OnClick>
+<RowDblClick><![CDATA[SetFormState("Edit")]]></RowDblClick>
 ```
 
 ---
@@ -128,7 +130,7 @@ Form 中有多个使用脚本类型的地方：
 ```xml
 <MacroCollection>
     <Macro Key="宏标识" Args="参数列表">
-        宏公式内容
+        <![CDATA[宏公式内容]]>
     </Macro>
 </MacroCollection>
 ```
@@ -150,60 +152,33 @@ Form 中有多个使用脚本类型的地方：
 
 ```xml
 <OperationCollection>
-    <!-- 新增 -->
-    <Operation Key="New" Caption="新增" Icon="new.png" ShortCuts="Ctrl+N">
-        <Action>New()</Action>
+    <Operation Key="New" Caption="新增" ShortCuts="Ctrl+N">
+        <Action><![CDATA[New()]]></Action>
     </Operation>
-    
-    <!-- 编辑/修改 -->
-    <Operation Key="Edit" Caption="编辑" Icon="edit.png">
-        <Action>Edit()</Action>
+    <Operation Key="Edit" Caption="编辑">
+        <Action><![CDATA[Edit()]]></Action>
     </Operation>
-    
-    <!-- 保存 -->
-    <Operation Key="Save" Caption="保存" Icon="save.png" ShortCuts="Ctrl+S" SelfDisable="true">
-        <Action>Save()</Action>
-        <ExceptionHandler>ShowMessage(GetLastError())</ExceptionHandler>
+    <Operation Key="Save" Caption="保存" ShortCuts="Ctrl+S" SelfDisable="true">
+        <Action><![CDATA[Save()]]></Action>
+        <ExceptionHandler><![CDATA[ShowMessage(GetLastError())]]></ExceptionHandler>
     </Operation>
-    
-    <!-- 删除 -->
-    <Operation Key="Delete" Caption="删除" Icon="delete.png">
-        <Action>
-            if(Confirm("确定要删除吗？")) {
-                Delete()
-            }
-        </Action>
+    <Operation Key="Delete" Caption="删除">
+        <Action><![CDATA[if(Confirm("确定要删除吗？")) { Delete() }]]></Action>
     </Operation>
-    
-    <!-- 取消 -->
-    <Operation Key="Cancel" Caption="取消" Icon="cancel.png">
-        <Action>Cancel()</Action>
+    <Operation Key="Cancel" Caption="取消">
+        <Action><![CDATA[Cancel()]]></Action>
     </Operation>
-    
     <!-- 审核分组 -->
     <OperationCollection Key="ApproveGroup" Caption="审核">
-        <Operation Key="Submit" Caption="提交" Icon="submit.png" 
-                   Enable="GetFieldValue(&quot;Status&quot;)==0">
-            <Action>Submit()</Action>
+        <Operation Key="Submit" Caption="提交" Enable="GetFieldValue(&quot;Status&quot;)==0">
+            <Action><![CDATA[Submit()]]></Action>
         </Operation>
-        <Operation Key="Approve" Caption="审批" Icon="approve.png"
-                   Enable="GetFieldValue(&quot;Status&quot;)==1">
-            <Action>Approve()</Action>
-        </Operation>
-        <Operation Key="Reject" Caption="驳回" Icon="reject.png"
-                   Enable="GetFieldValue(&quot;Status&quot;)==1">
-            <Action>Reject()</Action>
+        <Operation Key="Approve" Caption="审批" Enable="GetFieldValue(&quot;Status&quot;)==1">
+            <Action><![CDATA[Approve()]]></Action>
         </Operation>
     </OperationCollection>
-    
-    <!-- 打印 -->
-    <Operation Key="Print" Caption="打印" Icon="print.png" ShortCuts="Ctrl+P">
-        <Action>Print()</Action>
-    </Operation>
-    
-    <!-- 关闭 -->
-    <Operation Key="Close" Caption="关闭" Icon="close.png">
-        <Action>CloseForm()</Action>
+    <Operation Key="Close" Caption="关闭">
+        <Action><![CDATA[CloseForm()]]></Action>
     </Operation>
 </OperationCollection>
 ```
@@ -238,14 +213,10 @@ Form 中有多个使用脚本类型的地方：
 ```xml
 <MacroCollection>
     <Macro Key="CalcAmount" Args="qty,price">
-        SetFieldValue("Amount", qty * price)
+        <![CDATA[SetFieldValue("Amount", qty * price)]]>
     </Macro>
     <Macro Key="ValidateBeforeSave">
-        if(IsEmpty(GetFieldValue("PONo"))) {
-            ShowMessage("订单编号不能为空")
-            return false
-        }
-        return true
+        <![CDATA[IIF(IsEmpty(GetFieldValue("PONo")), ShowMessage("订单编号不能为空"), true)]]>
     </Macro>
 </MacroCollection>
 ```
@@ -255,19 +226,8 @@ Form 中有多个使用脚本类型的地方：
 ```xml
 <Form Key="PurchaseOrder" Caption="采购订单" FormType="Entity">
     <!-- ... -->
-    <OnLoad>
-        if(GetFormState()=="New") {
-            SetFieldValue("PODate", Today())
-            SetFieldValue("Status", 0)
-        }
-    </OnLoad>
-    <OnClose>
-        if(IsModified()) {
-            if(Confirm("数据已修改，是否保存？")) {
-                Save()
-            }
-        }
-    </OnClose>
+    <OnLoad><![CDATA[IIF(GetFormState()=="New", SetFieldValue("PODate", Today()), '')]]></OnLoad>
+    <OnClose><![CDATA[IIF(IsModified(), IIF(Confirm("数据已修改，是否保存？"), Save(), ''), '')]]></OnClose>
 </Form>
 ```
 

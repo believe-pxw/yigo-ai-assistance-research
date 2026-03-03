@@ -4,24 +4,24 @@
         <DataObject Key="PM_Strategy" Caption="维护策略" PrimaryTableKey="EPM_Strategy" SecondaryType="Dict" PrimaryType="Entity" Version="1">
             <TableCollection>
                 <Table Key="EPM_Strategy" Caption="维护策略主表">
-                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/>
-                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/>
-                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
-                    <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/>
-                    <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/>
-                    <Column Key="Enable" Caption="启用标记" DefaultValue="1" DataElementKey="Enable"/>
-                    <Column Key="TLeft" Cache="true" DataElementKey="TLeft"/>
-                    <Column Key="TRight" Cache="true" DataElementKey="TRight"/>
-                    <Column Key="NodeType" Caption="节点类型" DataElementKey="NodeType"/>
-                    <Column Key="ParentID" Caption="上级节点" DataElementKey="ParentID"/>
-                    <Column Key="Code" Caption="代码" Cache="true" DefaultValue="" DataElementKey="Code" PrimaryKey="true"/>
-                    <Column Key="Name" Caption="名称" Persist="false" Cache="true" DefaultValue="" SupportI18n="true" DataElementKey="Name"/>
-                    <Column Key="ClientID" Caption="集团" DataElementKey="ClientID"/>
-                    <Column Key="Creator" Caption="创建人员" DataElementKey="Creator"/>
-                    <Column Key="CreateTime" Caption="创建时间" DataElementKey="CreateTime"/>
-                    <Column Key="CreateDate" Caption="制单日期" DataElementKey="CreateDate"/>
-                    <Column Key="Modifier" Caption="修改人员" DataElementKey="Modifier"/>
-                    <Column Key="ModifyTime" Caption="修改时间" DataElementKey="ModifyTime"/>
+                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/><!--系统字段，必要 -->
+                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/><!--系统字段，必要 -->
+                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/><!--系统字段，必要 -->
+                    <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/><!--系统字段，必要 -->
+                    <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/><!--系统字段，必要 -->
+                    <Column Key="Enable" Caption="启用标记" DefaultValue="1" DataElementKey="Enable"/><!--系统字段，必要 -->
+                    <Column Key="TLeft" Cache="true" DataElementKey="TLeft"/><!--系统字段，必要 -->
+                    <Column Key="TRight" Cache="true" DataElementKey="TRight"/><!--系统字段，必要 -->
+                    <Column Key="NodeType" Caption="节点类型" DataElementKey="NodeType"/><!--系统字段，必要 -->
+                    <Column Key="ParentID" Caption="上级节点" DataElementKey="ParentID"/><!--系统字段，必要 -->
+                    <Column Key="Code" Caption="代码" Cache="true" DefaultValue="" DataElementKey="Code" PrimaryKey="true"/><!--系统字段，必要 -->
+                    <Column Key="Name" Caption="名称" Persist="false" Cache="true" DefaultValue="" SupportI18n="true" DataElementKey="Name"/><!--系统字段，必要 -->
+                    <Column Key="ClientID" Caption="集团" DataElementKey="ClientID"/><!--系统字段，必要 -->
+                    <Column Key="Creator" Caption="创建人员" DataElementKey="Creator"/><!--系统字段，必要 -->
+                    <Column Key="CreateTime" Caption="创建时间" DataElementKey="CreateTime"/><!--系统字段，必要 -->
+                    <Column Key="CreateDate" Caption="制单日期" DataElementKey="CreateDate"/><!--系统字段，必要 -->
+                    <Column Key="Modifier" Caption="修改人员" DataElementKey="Modifier"/><!--系统字段，必要 -->
+                    <Column Key="ModifyTime" Caption="修改时间" DataElementKey="ModifyTime"/><!--系统字段，必要 -->
                     <Column Key="Notes" Caption="备注" DefaultValue="" DataElementKey="Notes"/>
                     <Column Key="SchedulingIndicator" Caption="计划标识" Cache="true" DataElementKey="SchedulingIndicatorType"/>
                     <Column Key="StrategyUnitID" Caption="策略单位" Cache="true" DataElementKey="CycleUnitID"/>
@@ -33,15 +33,15 @@
                     <Column Key="EarlyTolerance" Caption="提早完成的容差" Cache="true" DataElementKey="EarlyTolerance"/>
                     <Column Key="TCodeID" Caption="事务码" Cache="true" DataElementKey="TCodeID"/>
                     <Column Key="IsCycleSet" Caption="是否周期集" Cache="true" DataElementKey="IsCycleSet"/>
-                    <Column Key="SystemVestKey" Caption="单据Key" DataElementKey="SystemVestKey"/>
+                    <Column Key="SystemVestKey" Caption="单据Key" DataElementKey="SystemVestKey"/><!--系统字段，必要 -->
                 </Table>
                 <Table Key="EPM_StrategyDtl" Caption="维护策略明细" TableMode="Detail" IndexPrefix="EPM_StrategyDtl">
-                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/>
-                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID" PrimaryKey="true"/>
-                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
-                    <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/>
-                    <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/>
-                    <Column Key="Sequence" Caption="序号" DataElementKey="Sequence"/>
+                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/><!--系统字段，必要 -->
+                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/><!--系统字段，必要 -->
+                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/><!--系统字段，必要 -->
+                    <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/><!--系统字段，必要 -->
+                    <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/><!--系统字段，必要 -->
+                    <Column Key="Sequence" Caption="序号" DataElementKey="Sequence"/><!--系统字段，必要 -->
                     <Column Key="CycleNotes" Caption="周期文本" DefaultValue="" DataElementKey="CycleNotes"/>
                     <Column Key="CycleShortText" Caption="周期短文本" DefaultValue="" DataElementKey="CycleShortText"/>
                     <Column Key="CycleLength" Caption="周期长度" DataElementKey="PM_CycleLength"/>

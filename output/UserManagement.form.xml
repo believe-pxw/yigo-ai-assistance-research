@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form Key="UserManagement" Caption="用户维护" FormType="Entity" InitState="Default" Version="6.1" Platform="PC">
+
+    <!-- 数据源 -->
+    <DataSource RefObjectKey="UserManagement" />
+
+    <!-- 操作集合 -->
+    <OperationCollection>
+        <Operation Key="Save" Caption="保存" Icon="save.png" ShortCuts="Ctrl+S" SelfDisable="true">
+            <Action>Save()</Action>
+        </Operation>
+        <Operation Key="Cancel" Caption="取消">
+            <Action>Cancel()</Action>
+        </Operation>
+    </OperationCollection>
+
+    <Body PopWidth="950" PopHeight="750" Resizable="true">
+        <Block Key="mainBlock" Caption="主区域">
+
+            <!-- ========== 表头区域 ========== -->
+            <FlexGridLayoutPanel Key="headerPanel" Caption="表头" ColumnCount="4" RowGap="6" ColumnGap="10">
+                <TextEditor Key="UserID" Caption="用户" Enable="false">
+                    <DataBinding TableKey="UserMaster" ColumnKey="UserID" />
+                </TextEditor>
+                <Label Key="lblPlaceholder1" Caption="" />
+                <Label Key="lblPlaceholder2" Caption="" />
+                <Label Key="lblPlaceholder3" Caption="" />
+
+                <TextEditor Key="ChangedBy" Caption="更改者" Enable="false">
+                    <DataBinding TableKey="UserMaster" ColumnKey="ChangedBy" />
+                </TextEditor>
+                <DatePicker Key="ChangedDate" Caption="" Format="yyyy-MM-dd HH:mm:ss" Enable="false">
+                    <DataBinding TableKey="UserMaster" ColumnKey="ChangedDate" />
+                </DatePicker>
+                <TextEditor Key="Status" Caption="状态" Enable="false">
+                    <DataBinding TableKey="UserMaster" ColumnKey="Status" />
+                </TextEditor>
+                <Label Key="lblPlaceholder4" Caption="" />
+            </FlexGridLayoutPanel>
+
+            <!-- ========== 页签区域 ========== -->
+            <TabPanel Key="tabMain" Caption="主页签" TabPosition="Top">
+
+                <!-- ===== 页签1：地址 ===== -->
+                <FlexFlowLayoutPanel Key="tabAddress" Caption="地址">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签2：登录数据 ===== -->
+                <FlexFlowLayoutPanel Key="tabLoginData" Caption="登录数据">
+
+                    <!-- 基本信息区域 -->
+                    <FlexGridLayoutPanel Key="loginBasicPanel" Caption="" ColumnCount="2" RowGap="6" ColumnGap="10">
+                        <TextEditor Key="Alias" Caption="别名">
+                            <DataBinding TableKey="UserMaster" ColumnKey="Alias" />
+                        </TextEditor>
+                        <Label Key="lblAliasSpacer" Caption="" />
+
+                        <ComboBox Key="UserType" Caption="用户类型" SourceType="Static">
+                            <DataBinding TableKey="UserMaster" ColumnKey="UserType" />
+                            <Item Key="Dialog" Caption="对话" />
+                            <Item Key="System" Caption="系统" />
+                            <Item Key="Communication" Caption="通讯" />
+                            <Item Key="Service" Caption="服务" />
+                            <Item Key="Reference" Caption="参考" />
+                        </ComboBox>
+                        <Label Key="lblUserTypeSpacer" Caption="" />
+
+                        <TextEditor Key="SecurityPolicy" Caption="Sich.-Richtlinie">
+                            <DataBinding TableKey="UserMaster" ColumnKey="SecurityPolicy" />
+                        </TextEditor>
+                        <Label Key="lblSecPolicySpacer" Caption="" />
+                    </FlexGridLayoutPanel>
+
+                    <!-- 密码分组 -->
+                    <FlexGridLayoutPanel Key="passwordGroup" Caption="密码" ColumnCount="3" RowGap="6" ColumnGap="10">
+                        <TextEditor Key="PasswordStatus" Caption="密码状态" Enable="false">
+                            <DataBinding TableKey="UserMaster" ColumnKey="PasswordStatus" />
+                        </TextEditor>
+                        <Button Key="btnGeneratePassword" Caption="生产密码">
+                            <OnClick>GeneratePassword()</OnClick>
+                        </Button>
+                        <Button Key="btnPasswordInfo" Caption="" Icon="info.png" OnlyIcon="true" />
+                    </FlexGridLayoutPanel>
+
+                    <!-- 权限检查的用户组 -->
+                    <FlexGridLayoutPanel Key="authGroupPanel" Caption="权限检查的用户组" ColumnCount="2" RowGap="6" ColumnGap="10">
+                        <Dict Key="UserGroup" Caption="用户组" ItemKey="UserGroup" Editable="true">
+                            <DataBinding TableKey="UserMaster" ColumnKey="UserGroup" />
+                        </Dict>
+                        <Label Key="lblUserGroupSpacer" Caption="" />
+                    </FlexGridLayoutPanel>
+
+                    <!-- 有效期间 -->
+                    <FlexGridLayoutPanel Key="validityPanel" Caption="有效期间" ColumnCount="2" RowGap="6" ColumnGap="10">
+                        <DatePicker Key="ValidFrom" Caption="有效自" Format="yyyy-MM-dd">
+                            <DataBinding TableKey="UserMaster" ColumnKey="ValidFrom" />
+                        </DatePicker>
+                        <Label Key="lblValidFromSpacer" Caption="" />
+
+                        <DatePicker Key="ValidTo" Caption="有效至" Format="yyyy-MM-dd">
+                            <DataBinding TableKey="UserMaster" ColumnKey="ValidTo" />
+                        </DatePicker>
+                        <Label Key="lblValidToSpacer" Caption="" />
+                    </FlexGridLayoutPanel>
+
+                    <!-- 其它数据 -->
+                    <FlexGridLayoutPanel Key="otherDataPanel" Caption="其它数据" ColumnCount="2" RowGap="6" ColumnGap="10">
+                        <TextEditor Key="AccountNumber" Caption="科目号">
+                            <DataBinding TableKey="UserMaster" ColumnKey="AccountNumber" />
+                        </TextEditor>
+                        <Label Key="lblAccountSpacer" Caption="" />
+
+                        <TextEditor Key="CostCenter" Caption="成本中心">
+                            <DataBinding TableKey="UserMaster" ColumnKey="CostCenter" />
+                        </TextEditor>
+                        <Label Key="lblCostCenterSpacer" Caption="" />
+                    </FlexGridLayoutPanel>
+
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签3：SNC ===== -->
+                <FlexFlowLayoutPanel Key="tabSNC" Caption="SNC">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签4：缺省值 ===== -->
+                <FlexFlowLayoutPanel Key="tabDefaults" Caption="缺省值">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签5：参数 ===== -->
+                <FlexFlowLayoutPanel Key="tabParameters" Caption="参数">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签6：角色 ===== -->
+                <FlexFlowLayoutPanel Key="tabRoles" Caption="角色">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签7：参数文件 ===== -->
+                <FlexFlowLayoutPanel Key="tabProfiles" Caption="参数文件">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签8：组 ===== -->
+                <FlexFlowLayoutPanel Key="tabGroups" Caption="组">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签9：个性化设置 ===== -->
+                <FlexFlowLayoutPanel Key="tabPersonalization" Caption="个性化设置">
+                </FlexFlowLayoutPanel>
+
+                <!-- ===== 页签10：许可证数据 ===== -->
+                <FlexFlowLayoutPanel Key="tabLicense" Caption="许可证数据">
+                </FlexFlowLayoutPanel>
+
+            </TabPanel>
+
+        </Block>
+    </Body>
+
+</Form>

@@ -9,6 +9,8 @@ description: 生成 YIGO Form XML 中的 Grid 表格控件，包含 GridColumnCo
 
 本 Skill 负责生成 YIGO Form XML 中最复杂的组件 —— **Grid 表格控件**。Grid 用于展示和编辑明细数据，包含列定义、行定义、单元格配置、事件和分页等。
 
+> **Grid 内所有事件公式都必须用 `<![CDATA[]]>` 包裹**，包括 `RowClick`, `RowDblClick`, `OnRowDelete`, `CheckRule`, `ValueChanged` 等。
+
 ## XSD 参考文件
 
 - 主文件：[Grid.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/Grid.xsd)（913 行）
@@ -40,14 +42,14 @@ description: 生成 YIGO Form XML 中的 Grid 表格控件，包含 GridColumnCo
         </GridRow>
     </GridRowCollection>
     
-    <!-- 事件 -->
-    <RowClick>行点击事件公式</RowClick>
-    <RowDblClick>行双击事件公式</RowDblClick>
-    <BeforeRowInsert>行添加前事件</BeforeRowInsert>
-    <RowInsert>行添加事件</RowInsert>
-    <RowDelete>行删除后事件</RowDelete>
-    <OnRowDelete>行删除事件</OnRowDelete>
-    <onBatchRowDelete>批量删除事件</onBatchRowDelete>
+    <!-- 事件（内容用 CDATA 包裹） -->
+    <RowClick><![CDATA[行点击事件公式]]></RowClick>
+    <RowDblClick><![CDATA[行双击事件公式]]></RowDblClick>
+    <BeforeRowInsert><![CDATA[行添加前事件]]></BeforeRowInsert>
+    <RowInsert><![CDATA[行添加事件]]></RowInsert>
+    <RowDelete><![CDATA[行删除后事件]]></RowDelete>
+    <OnRowDelete><![CDATA[行删除事件]]></OnRowDelete>
+    <onBatchRowDelete><![CDATA[批量删除事件]]></onBatchRowDelete>
     
     <!-- 追溯集合 -->
     <TraceCollection>
@@ -320,7 +322,7 @@ GridCell 的 `CellType` 属性决定单元格使用哪种控件，取值参考 `
             </GridCell>
         </GridRow>
     </GridRowCollection>
-    <RowDblClick>OpenForm("PurchaseOrder")</RowDblClick>
+    <RowDblClick><![CDATA[Open("PurchaseOrder")]]></RowDblClick>
 </Grid>
 ```
 

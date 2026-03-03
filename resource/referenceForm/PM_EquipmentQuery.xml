@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Form Key="PM_EquipmentQuery" FormType="Entity" FormulaCaption="IIFS(GetEntryPara('TCode') == 'IE05', '设备列表编辑', GetEntryPara('TCode') == 'IH08', '设备列表显示', true, '设备查询')" InitState="Default" Version="44">
+    <DataSource>
+        <DataObject Key="PM_Equipment_Query" Caption="设备查询" PrimaryType="Entity" Version="1">
+            <TableCollection>
+                <Table Key="EPM_Equipment_Query" Caption="设备清单" TableMode="Detail" SourceType="Query" Persist="false" OrderBy="'CreateTime Desc,DocumentNumber Desc'">
+                    <Column Key="OID" Caption="对象标识" DataElementKey="OID"/>
+                    <Column Key="SOID" Caption="主对象标识" DataElementKey="SOID"/>
+                    <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
+                    <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/>
+                    <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/>
+                    <Column Key="EquipmentCategoryID" Caption="设备种类" DataElementKey="EquipmentCategoryID"/>
+                    <Column Key="EquipmentNotes" Caption="设备描述" DefaultValue="" DataElementKey="EquipmentNotes"/>
+                    <Column Key="EquipSNStatusText" Caption="系统状态" DefaultValue="" DataElementKey="EquipSNStatusText"/>
+                    <Column Key="EquipSerialNumberStatus" Caption="设备和序列号状态" DataElementKey="EquipSerialNumberStatus"/>
+                    <Column Key="DocumentNumber" Caption="设备" DefaultValue="" DataElementKey="DocumentNumber"/>
+                    <Column Key="MaintPlantID" Caption="维护工厂" DataElementKey="MaintPlantID"/>
+                    <Column Key="PlanningPlantID" Caption="计划工厂" DataElementKey="PlanningPlantID"/>
+                    <Column Key="WorkCenterID" Caption="工作中心" DataElementKey="TecoObjectWorkCenterID"/>
+                    <Column Key="AssetCardSOID" Caption="资产" DataElementKey="AssetCardSOID"/>
+                    <Column Key="OrgCompanyCodeID" Caption="公司代码" DataElementKey="CompanyCodeID"/>
+                    <Column Key="BusinessAreaID" Caption="业务范围" DataElementKey="BusinessAreaID"/>
+                    <Column Key="CostCenterID" Caption="成本中心" DataElementKey="CostCenterID"/>
+                    <Column Key="ControllingAreaID" Caption="控制范围" DataElementKey="ControllingAreaID"/>
+                    <Column Key="PlannerGroupID" Caption="计划人员组" DataElementKey="PMPlannerGroupID"/>
+                    <Column Key="EquipUserStatusText" Caption="用户状态" DataElementKey="EquipUserStatusText"/>
+                    <Column Key="StartDate" Caption="开始日期" DataElementKey="TechObjectStartupDate"/>
+                    <Column Key="TechnicalObjectID" Caption="技术对象类型" DataElementKey="TechnicalObjectID"/>
+                    <Column Key="Manufacturer" Caption="制造商" DataElementKey="Manufacturer"/>
+                    <Column Key="ManufCountryID" Caption="制造商国家" DataElementKey="ManufCountryID"/>
+                    <Column Key="ModelNumber" Caption="型号" DataElementKey="ModelNumber"/>
+                    <Column Key="ConstYear" Caption="制造年" DataElementKey="ConstYear"/>
+                    <Column Key="ConstMon" Caption="制造月" DataElementKey="ConstMon"/>
+                    <Column Key="AssetCardDocNo" Caption="资产号" DataElementKey="DocumentNumber"/>
+                    <Column Key="MainWorkCenterID" Caption="主工作中心" DataElementKey="MainWorkCenterID"/>
+                    <Column Key="CatalogProfileID" Caption="类别参数文件" DataElementKey="CatalogProfileID"/>
+                    <Column Key="FunctionalLocationSOID" Caption="功能位置" DataElementKey="FunctionalLocationSOID"/>
+                    <Column Key="EquipmentSOID" Caption="高级设备" DataElementKey="EquipmentSOID"/>
+                    <Column Key="MaterialID" Caption="物料" DataElementKey="MaterialID"/>
+                    <Column Key="LocationID" Caption="位置" DataElementKey="LocationID"/>
+                    <Column Key="Room" Caption="房间" DataElementKey="Room"/>
+                    <Column Key="PlantSectionID" Caption="工厂区域" DataElementKey="PlantSectionID"/>
+                    <Column Key="ABCIndicatorID" Caption="ABC标识" DataElementKey="ABCIndicatorID"/>
+                    <Column Key="Creator" Caption="制单人" DataElementKey="Creator"/>
+                    <Column Key="CreateTime" Caption="制单时间" DataElementKey="CreateTime"/>
+                    <Column Key="Modifier" Caption="修改人" DataElementKey="Modifier"/>
+                    <Column Key="ModifyTime" Caption="修改时间" DataElementKey="ModifyTime"/>
+                    <Column Key="TimeSegmentID" Caption="时间段" DataElementKey="TimeSegmentID"/>
+                    <Column Key="ValidStartDate" Caption="有效起始日" DataElementKey="ValidStartDate"/>
+                    <Column Key="ValidEndDate" Caption="有效截止日" DataElementKey="ValidEndDate"/>
+                    <Column Key="SerialNumber" Caption="序列号" DataElementKey="SerialNumber"/>
+                    <Column Key="CategoryTypeID" Caption="类别种类" DataElementKey="CategoryTypeID"/>
+                    <Column Key="SortField" Caption="分类字段" DataElementKey="SortField"/>
+                    <Column Key="WBSElementID" Caption="WBS元素" DataElementKey="WBSElementID"/>
+                    <Column Key="ClassificationID" Caption="分类" DataElementKey="ClassificationID_Multi"/>
+                    <Column Key="StructTypeID" Caption="构造类型" DataElementKey="StructTypeID"/>
+                    <Column Key="IsProcessed" Caption="已处理" Persist="false" DataElementKey="IsProcessed" IgnoreQuery="true"/>
+                    <Statement Type="Formula">
+                        <![CDATA['select '&Macro_SelectColumnKeys()&','&Macro_T('EMM_SNNumberHead','EquipmentNotes','')&' EquipmentNotes'&', '&Macro_SelectOtherColumnKeys()&' from emm_snnumberhead where ('&'EquipSerialNumberStatus='&SqlPara('1')&' or EquipSerialNumberStatus='&SqlPara('2')&')'&Macro_UnionHistory()]]>
+                    </Statement>
+                </Table>
+            </TableCollection>
+        </DataObject>
+    </DataSource>
+    <OperationCollection>
+        <Operation Key="Filter" Caption="重新选择" Visible="!GetPara('_IsUsageList')" Enable="true">
+            <Action>
+                <![CDATA[ERPShowModal('Cond_PM_EquipmentQuery')]]>
+            </Action>
+        </Operation>
+        <Operation Key="Refresh" Caption="刷新" RefKey="Refresh"/>
+        <Operation Key="ToEditMode" Caption="显示模式 -&gt; 编辑模式" Visible="GetPara('RptIsEditMode') == 0 &amp;&amp; (GetEntryPara('TCode') == 'IE05' || GetEntryPara('TCode') == 'IH08')" Enable="true">
+            <Action>
+                <![CDATA[SetPara('RptIsEditMode', 1);RefreshOperation()]]>
+            </Action>
+        </Operation>
+        <Operation Key="ToReadMode" Caption="编辑模式 -&gt; 显示模式" Visible="GetPara('RptIsEditMode') == 1 &amp;&amp; (GetEntryPara('TCode') == 'IE05' || GetEntryPara('TCode') == 'IH08')" Enable="true">
+            <Action>
+                <![CDATA[SetPara('RptIsEditMode', 0);RefreshOperation()]]>
+            </Action>
+        </Operation>
+        <Operation Key="CreateMaintenanceOrder" Caption="创建维护订单" Visible="GetEntryPara('TCode') == 'IE05' || GetEntryPara('TCode') == 'IH08'" Enable="GetRowCount('EquipmentQueryResultGrid') &gt; 0" Activity="01">
+            <Action>
+                <![CDATA[Macro_CreateMaintenanceOrder()]]>
+            </Action>
+        </Operation>
+        <OperationCollection Key="NewPrint" Caption="打印" SelfDisable="true">
+            <Operation Key="NewPrintDefault" Caption="默认模板打印" RefKey="NewPrintDefault" Activity="04"/>
+            <Operation Key="NewPrintSelect" Caption="其他模板选择" RefKey="NewPrintSelect" Activity="04"/>
+            <Operation Key="ManagePrint" Caption="打印模板管理" RefKey="ManagePrint" Activity="04"/>
+        </OperationCollection>
+        <OperationCollection Key="NewPrePrint" Caption="打印预览" SelfDisable="true">
+            <Operation Key="NewPrePrintDefault" Caption="默认模板预览" RefKey="NewPrePrintDefault" Activity="Y09"/>
+            <Operation Key="NewPrePrintSelect" Caption="其他模板选择" RefKey="NewPrePrintSelect" Activity="Y09"/>
+        </OperationCollection>
+        <Operation Key="ERPExportExcel" Caption="导出" RefKey="ERPExportExcel" Activity="Y11"/>
+        <Operation Key="UIClose" Caption="关闭" RefKey="UIClose"/>
+    </OperationCollection>
+    <Body>
+        <Block>
+            <FlexFlowLayoutPanel Key="root">
+                <ToolBar Key="ToolBar1" Caption="ToolBar1" Height="pref">
+                    <ToolBarItemCollection/>
+                </ToolBar>
+                <GridLayoutPanel Key="main_container" Height="100%" OverflowY="Auto">
+                    <Grid Key="EquipmentQueryResultGrid" Caption="序列号" PageLoadType="DB" SerialSeq="true" X="0" Y="0" DisabledOption="delete" Padding="8px">
+                        <GridColumnCollection>
+                            <GridColumn Key="IsSelect" Enable="true" Width="32px"/>
+                            <GridColumn Key="IsProcessed" Caption="已处理" LabelType="H" Enable="false" Width="80px"/>
+                            <GridColumn Key="EquipmentDocNo" Caption="设备" Width="80px"/>
+                            <GridColumn Key="EquipmentNotes" Caption="设备描述" Width="80px"/>
+                            <GridColumn Key="ValidStartDate" Caption="有效起始日" LabelType="H" Visible="GetPara('_IsUsageList')" Width="100px"/>
+                            <GridColumn Key="ValidEndDate" Caption="有效截止日" Visible="GetPara('_IsUsageList')" Width="100px"/>
+                            <GridColumn Key="EquipSNStatusText" Caption="系统状态" LabelType="H" Width="80px"/>
+                            <GridColumn Key="EquipUserStatusText" Caption="用户状态" LabelType="H" Width="80px"/>
+                            <GridColumn Key="StartDate" Caption="开始日期" LabelType="M" Width="100px"/>
+                            <GridColumn Key="TechnicalObjectID" Caption="技术对象类型" LabelType="L" Width="120px"/>
+                            <GridColumn Key="Manufacturer" Caption="制造商" LabelType="M" Width="80px"/>
+                            <GridColumn Key="ManufCountryID" Caption="制造商国家" LabelType="M" Width="100px"/>
+                            <GridColumn Key="ModelNumber" Caption="型号" LabelType="H" Width="80px"/>
+                            <GridColumn Key="ConstYear" Caption="制造年" LabelType="M" Width="80px"/>
+                            <GridColumn Key="ConstMon" Caption="制造月" LabelType="M" Width="80px"/>
+                            <GridColumn Key="OrgCompanyCodeID" Caption="公司代码" LabelType="M" Width="80px"/>
+                            <GridColumn Key="AssetCardDocNo" Caption="资产号" Width="80px"/>
+                            <GridColumn Key="CostCenterID" Caption="成本中心" LabelType="H" Width="80px"/>
+                            <GridColumn Key="PlanningPlantID" Caption="计划工厂" LabelType="M" Width="80px"/>
+                            <GridColumn Key="PlannerGroupID" Caption="计划员组" LabelType="S" Width="80px"/>
+                            <GridColumn Key="MainWorkCenterID" Caption="主工作中心" LabelType="M" Width="100px"/>
+                            <GridColumn Key="CatalogProfileID" Caption="类别参数文件" LabelType="M" Width="120px"/>
+                            <GridColumn Key="FunctionalLocationSOID" Caption="功能位置" LabelType="H" Width="80px"/>
+                            <GridColumn Key="SupEquipmentSOID" Caption="高级设备" Width="80px"/>
+                            <GridColumn Key="MaterialID" Caption="物料" LabelType="H" Width="80px"/>
+                            <GridColumn Key="MaintPlantID" Caption="维护工厂" LabelType="M" Width="80px"/>
+                            <GridColumn Key="LocationID" Caption="位置" LabelType="H" Width="80px"/>
+                            <GridColumn Key="Room" Caption="房间" LabelType="H" Width="80px"/>
+                            <GridColumn Key="PlantSectionID" Caption="工厂区域" LabelType="M" Width="80px"/>
+                            <GridColumn Key="WorkCenterID" Caption="工作中心" LabelType="M" Width="80px"/>
+                            <GridColumn Key="ABCIndicatorID" Caption="ABC标识" LabelType="M" Width="80px"/>
+                            <GridColumn Key="Creator" Caption="创建人" Width="80px"/>
+                            <GridColumn Key="CreateTime" Caption="创建日期" Width="160px"/>
+                            <GridColumn Key="Modifier" Caption="更改人" Width="80px"/>
+                            <GridColumn Key="ModifyTime" Caption="更改时间" Width="160px"/>
+                            <GridColumn Key="EquipmentCategoryID" Caption="设备种类" LabelType="M" Width="80px"/>
+                            <GridColumn Key="EquipSerialNumberStatus" Caption="设备和序列号状态" LabelType="H" Width="80px"/>
+                            <GridColumn Key="SerialNumber" Caption="序列号" LabelType="H" Width="80px"/>
+                            <GridColumn Key="CategoryTypeID" Caption="类别种类" LabelType="M" Width="160px"/>
+                            <GridColumn Key="SortField" Caption="分类字段" LabelType="H" Width="160px"/>
+                            <GridColumn Key="WBSElementID" Caption="WBS元素" LabelType="M" Width="160px"/>
+                            <GridColumn Key="ClassificationID" Caption="分类" LabelType="H" Width="160px"/>
+                            <GridColumn Key="BussinessAreaID" Caption="业务范围" LabelType="M" Width="80px"/>
+                            <GridColumn Key="SOID" Caption="SOID" Visible="false" Width="80px"/>
+                            <GridColumn Key="TimeSegmentID" Caption="TimeSegmentID" LabelType="H" Visible="false" Width="80px"/>
+                        </GridColumnCollection>
+                        <GridRowCollection>
+                            <GridRow Key="RowInEquipmentQueryResultGrid" TableKey="EPM_Equipment_Query">
+                                <GridCell Key="IsSelect" Caption="选择" CellType="CheckBox" IsSelect="true"/>
+                                <GridCell Key="IsProcessed" Caption="已处理" CellType="CheckBox">
+                                    <DataBinding ColumnKey="IsProcessed"/>
+                                </GridCell>
+                                <GridCell Key="EquipmentDocNo" Caption="设备" CellType="TextEditor" MaxLength="100" Trim="true">
+                                    <DataBinding ColumnKey="DocumentNumber"/>
+                                </GridCell>
+                                <GridCell Key="EquipmentNotes" Caption="设备描述" CellType="TextEditor" MaxLength="100" Trim="true">
+                                    <DataBinding ColumnKey="EquipmentNotes"/>
+                                </GridCell>
+                                <GridCell Key="ValidStartDate" Caption="有效起始日" CellType="UTCDatePicker">
+                                    <DataBinding ColumnKey="ValidStartDate"/>
+                                </GridCell>
+                                <GridCell Key="ValidEndDate" Caption="有效截止日" CellType="UTCDatePicker">
+                                    <DataBinding ColumnKey="ValidEndDate"/>
+                                </GridCell>
+                                <GridCell Key="EquipSNStatusText" Caption="系统状态" CellType="TextEditor" MaxLength="100" Trim="true">
+                                    <DataBinding ColumnKey="EquipSNStatusText"/>
+                                </GridCell>
+                                <GridCell Key="EquipUserStatusText" Caption="用户状态" CellType="TextEditor" MaxLength="100">
+                                    <DataBinding ColumnKey="EquipUserStatusText"/>
+                                </GridCell>
+                                <GridCell Key="StartDate" Caption="开始日期" CellType="UTCDatePicker">
+                                    <DataBinding ColumnKey="StartDate"/>
+                                </GridCell>
+                                <GridCell Key="TechnicalObjectID" Caption="技术对象类型" CellType="Dict" ItemKey="PM_TechnicalObject">
+                                    <DataBinding ColumnKey="TechnicalObjectID"/>
+                                </GridCell>
+                                <GridCell Key="Manufacturer" Caption="制造商" CellType="TextEditor" MaxLength="30">
+                                    <DataBinding ColumnKey="Manufacturer"/>
+                                </GridCell>
+                                <GridCell Key="ManufCountryID" Caption="制造商国家" CellType="Dict" ItemKey="Country">
+                                    <DataBinding ColumnKey="ManufCountryID"/>
+                                </GridCell>
+                                <GridCell Key="ModelNumber" Caption="型号" CellType="TextEditor" MaxLength="50">
+                                    <DataBinding ColumnKey="ModelNumber"/>
+                                </GridCell>
+                                <GridCell Key="ConstYear" Caption="制造年" CellType="NumberEditor" IntegerValue="true" Precision="9" Scale="0">
+                                    <DataBinding ColumnKey="ConstYear"/>
+                                    <CellFormat HAlign="Right"/>
+                                </GridCell>
+                                <GridCell Key="ConstMon" Caption="制造月" CellType="NumberEditor" IntegerValue="true" Precision="9" Scale="0">
+                                    <DataBinding ColumnKey="ConstMon"/>
+                                    <CellFormat HAlign="Right"/>
+                                </GridCell>
+                                <GridCell Key="OrgCompanyCodeID" Caption="公司代码" CellType="Dict" ItemKey="CompanyCode">
+                                    <DataBinding ColumnKey="OrgCompanyCodeID"/>
+                                </GridCell>
+                                <GridCell Key="AssetCardDocNo" Caption="资产号" CellType="TextEditor" MaxLength="50">
+                                    <DataBinding ColumnKey="AssetCardDocNo"/>
+                                </GridCell>
+                                <GridCell Key="CostCenterID" Caption="成本中心" CellType="Dict" ItemKey="CostCenter">
+                                    <DataBinding ColumnKey="CostCenterID"/>
+                                </GridCell>
+                                <GridCell Key="PlanningPlantID" Caption="计划工厂" CellType="Dict" ItemKey="Plant">
+                                    <DataBinding ColumnKey="PlanningPlantID"/>
+                                </GridCell>
+                                <GridCell Key="PlannerGroupID" Caption="计划员组" CellType="Dict" ItemKey="PM_PlannerGroup">
+                                    <DataBinding ColumnKey="PlannerGroupID"/>
+                                </GridCell>
+                                <GridCell Key="MainWorkCenterID" Caption="主工作中心" CellType="Dict" ItemKey="WorkCenter">
+                                    <DataBinding ColumnKey="MainWorkCenterID"/>
+                                </GridCell>
+                                <GridCell Key="CatalogProfileID" Caption="类别参数文件" CellType="Dict" ItemKey="QM_CatalogProfile">
+                                    <DataBinding ColumnKey="CatalogProfileID"/>
+                                </GridCell>
+                                <GridCell Key="FunctionalLocationSOID" Caption="功能位置" CellType="Dict" ItemKey="PM_FunctionalLocation__Dic" StateMask="Enable|Disable|Discard">
+                                    <DataBinding ColumnKey="FunctionalLocationSOID"/>
+                                </GridCell>
+                                <GridCell Key="SupEquipmentSOID" Caption="高级设备描述" CellType="Dict" ItemKey="PM_Equipment__Dic" StateMask="Enable|Disable|Discard">
+                                    <DataBinding ColumnKey="EquipmentSOID"/>
+                                </GridCell>
+                                <GridCell Key="MaterialID" Caption="物料" CellType="Dict" ItemKey="Material">
+                                    <DataBinding ColumnKey="MaterialID"/>
+                                </GridCell>
+                                <GridCell Key="MaintPlantID" Caption="维护工厂" CellType="Dict" ItemKey="Plant">
+                                    <DataBinding ColumnKey="MaintPlantID"/>
+                                </GridCell>
+                                <GridCell Key="LocationID" Caption="位置" CellType="Dict" ItemKey="Location">
+                                    <DataBinding ColumnKey="LocationID"/>
+                                </GridCell>
+                                <GridCell Key="Room" Caption="房间" CellType="TextEditor" Case="Upper">
+                                    <DataBinding ColumnKey="Room"/>
+                                </GridCell>
+                                <GridCell Key="PlantSectionID" Caption="工厂区域" CellType="Dict" ItemKey="PM_PlantSection">
+                                    <DataBinding ColumnKey="PlantSectionID"/>
+                                </GridCell>
+                                <GridCell Key="WorkCenterID" Caption="工作中心" CellType="Dict" ItemKey="WorkCenter">
+                                    <DataBinding ColumnKey="WorkCenterID"/>
+                                </GridCell>
+                                <GridCell Key="ABCIndicatorID" Caption="ABC标识" CellType="Dict" ItemKey="PM_ABCIndicator">
+                                    <DataBinding ColumnKey="ABCIndicatorID"/>
+                                    <ItemFilter ItemKey="PM_ABCIndicator">
+                                        <Filter Key="Filter" Impl="com.bokesoft.yes.erp.condition.Filter" Type="Custom">
+                                            <FilterValue Index="1" ParaValue="' ABCIndicatorType = ' + SqlPara(2)"/>
+                                        </Filter>
+                                    </ItemFilter>
+                                </GridCell>
+                                <GridCell Key="Creator" Caption="创建人" CellType="Dict" ItemKey="Operator">
+                                    <DataBinding ColumnKey="Creator"/>
+                                </GridCell>
+                                <GridCell Key="CreateTime" Caption="创建日期" CellType="UTCDatePicker">
+                                    <DataBinding ColumnKey="CreateTime"/>
+                                </GridCell>
+                                <GridCell Key="Modifier" Caption="更改人" CellType="Dict" ItemKey="Operator">
+                                    <DataBinding ColumnKey="Modifier"/>
+                                </GridCell>
+                                <GridCell Key="ModifyTime" Caption="更改时间" CellType="UTCDatePicker">
+                                    <DataBinding ColumnKey="ModifyTime"/>
+                                </GridCell>
+                                <GridCell Key="EquipmentCategoryID" Caption="设备种类" CellType="Dict" ItemKey="PM_EquipmentCategory">
+                                    <DataBinding ColumnKey="EquipmentCategoryID"/>
+                                </GridCell>
+                                <GridCell Key="EquipSerialNumberStatus" Caption="设备和序列号状态" CellType="ComboBox" IntegerValue="true" GroupKey="EquipSerialNumberStatus" SourceType="ParaGroup">
+                                    <DataBinding ColumnKey="EquipSerialNumberStatus"/>
+                                </GridCell>
+                                <GridCell Key="SerialNumber" Caption="序列号" CellType="TextEditor" MaxLength="100">
+                                    <DataBinding ColumnKey="SerialNumber"/>
+                                </GridCell>
+                                <GridCell Key="CategoryTypeID" Caption="类别种类" CellType="Dict" ItemKey="MM_CategoryType">
+                                    <DataBinding ColumnKey="CategoryTypeID"/>
+                                </GridCell>
+                                <GridCell Key="SortField" Caption="分类字段" CellType="TextEditor">
+                                    <DataBinding ColumnKey="SortField"/>
+                                </GridCell>
+                                <GridCell Key="WBSElementID" Caption="WBS元素" CellType="Dict" ItemKey="PS_WBSElement">
+                                    <DataBinding ColumnKey="WBSElementID"/>
+                                </GridCell>
+                                <GridCell Key="ClassificationID" Caption="分类" CellType="Dict" AllowMultiSelection="true" ItemKey="Classification">
+                                    <DataBinding ColumnKey="ClassificationID"/>
+                                </GridCell>
+                                <GridCell Key="BussinessAreaID" Caption="业务范围" CellType="Dict" ItemKey="BusinessArea">
+                                    <DataBinding ColumnKey="BusinessAreaID"/>
+                                </GridCell>
+                                <GridCell Key="SOID" Caption="SOID" CellType="NumberEditor" Scale="0" UseGroupingSeparator="false">
+                                    <DataBinding ColumnKey="SOID"/>
+                                </GridCell>
+                                <GridCell Key="TimeSegmentID" Caption="TimeSegmentID" CellType="NumberEditor" Scale="0" UseGroupingSeparator="false">
+                                    <DataBinding ColumnKey="TimeSegmentID"/>
+                                </GridCell>
+                            </GridRow>
+                        </GridRowCollection>
+                        <RowDblClick>
+                            <![CDATA[PushPara('_TimeSegmentID',TimeSegmentID);Macro_OpenBill();SetValue('IsProcessed', 1);]]>
+                        </RowDblClick>
+                    </Grid>
+                    <RowDefCollection RowGap="24">
+                        <RowDef Height="100%"/>
+                    </RowDefCollection>
+                    <ColumnDefCollection ColumnGap="16">
+                        <ColumnDef Width="100%"/>
+                    </ColumnDefCollection>
+                </GridLayoutPanel>
+            </FlexFlowLayoutPanel>
+        </Block>
+    </Body>
+    <OnLoad>
+        <![CDATA[SetPara('RptIsEditMode', IIF(GetEntryPara('TCode') == 'IE05', 1, 0)); ERPShowModal('Cond_PM_EquipmentQuery')]]>
+    </OnLoad>
+    <MacroCollection>
+        <Macro Key="Macro_CreateMaintenanceOrder">
+            <![CDATA[var selBillID = GetSelDtlFldValue('SOID', ',');
+IIFS(Length(selBillID)==0,IIF(GetFocusRow('EquipmentQueryResultGrid') >= 0,ERPShowModal('PM_CreateMaintenanceOrder', 'Macro_ShowEvent(' + SOID + ', 0)', 'newtab'),ConfirmMsg('PM_MAINTENANCEORDER023','请勾选一行',{})),IndexOf(selBillID,',') > 0,ConfirmMsg('PM_MAINTENANCEORDER024','不支持多选创建',{}),ERPShowModal('PM_CreateMaintenanceOrder', 'Macro_ShowEvent(' + selBillID + ', 0)', 'newtab'))]]>
+        </Macro>
+        <Macro Key="Macro_OpenBill">
+            <![CDATA[ERPShowModal('PM_Equipment', 'Macro_PM_EquipmentQuery_ShowEvent(' + SOID + ',' + (GetPara('RptIsEditMode') == 1) + ')', 'newtab')]]>
+        </Macro>
+        <Macro Key="Macro_LoadUsageListShowEvent" Args="EquipmentID">
+            <![CDATA[Macro_SetTableFilter(0, 'SOID = '&SqlPara(EquipmentID));Macro_LoadObject()]]>
+        </Macro>
+        <Macro Key="Macro_UnionHistory">
+            <![CDATA[if(GetPara('_IsUsageList')){'union all select '&com.bokesoft.erp.pm.masterdata.EquipmentHistory.mergeEquipAndHistoryQueryCols('h.', 's.',Macro_SelectColumnKeys())&','&Macro_T('EMM_SNNumberHead','EquipmentNotes','h')&' EquipmentNotes'&' ,(select CategoryTypeID from EGS_Object_Classification c where c.soid = h.oid group by CategoryTypeID) CategoryTypeID,
+					   (select ClassificationIDs from EGS_Object_Classification oc where oc.soid = h.oid GROUP BY ClassificationIDs) ClassificationID from emm_snnumberhead h inner join EPM_EquipmentTimeSegment s on h.soid = s.EquipmentSOID  where ('&'EquipSerialNumberStatus='&SqlPara('1')&' or EquipSerialNumberStatus='&SqlPara('2')&')'}]]>
+        </Macro>
+        <Macro Key="Macro_SelectColumnKeys">
+            <![CDATA['OID,
+       SOID,
+       POID,
+       VERID,
+       DVERID,
+	   ValidStartDate,
+	   ValidEndDate,
+       EquipmentCategoryID,
+       EquipSNStatusText,
+       EquipSerialNumberStatus,
+       DocumentNumber,
+       MaintPlantID,
+       PlanningPlantID,
+       WorkCenterID,
+       AssetCardSOID,
+       OrgCompanyCodeID,
+       BusinessAreaID,
+       CostCenterID,
+       ControllingAreaID,
+       PlannerGroupID,
+       EquipUserStatusText,
+       StartDate,
+       TechnicalObjectID,
+       Manufacturer,
+       ManufCountryID,
+       ModelNumber,
+       ConstYear,
+       ConstMon,
+       AssetCardDocNo,
+       MainWorkCenterID,
+       CatalogProfileID,
+       FunctionalLocationSOID,
+       EquipmentSOID,
+       MaterialID,
+       LocationID,
+       Room,
+       PlantSectionID,
+       ABCIndicatorID,
+       Creator,
+       CreateTime,
+       Modifier,
+       ModifyTime,
+       TimeSegmentID,
+			 SerialNumber,
+WBSElementID,
+SortField,
+StructTypeID']]>
+        </Macro>
+        <Macro Key="Macro_SelectOtherColumnKeys">
+            <![CDATA['
+					   (select CategoryTypeID from EGS_Object_Classification c where c.soid = emm_snnumberhead.oid group by CategoryTypeID) CategoryTypeID,
+					   (select ClassificationIDs from EGS_Object_Classification oc where oc.soid = emm_snnumberhead.oid GROUP BY ClassificationIDs) ClassificationID
+']]>
+        </Macro>
+    </MacroCollection>
+</Form>

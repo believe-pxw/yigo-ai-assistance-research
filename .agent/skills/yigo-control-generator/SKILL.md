@@ -9,6 +9,8 @@ description: 生成 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、D
 
 本 Skill 负责生成 YIGO Form XML 中的 **UI 控件**。YIGO 支持约 30 种控件类型，每种控件都有特定的属性和子元素。控件放置在面板（Panel）内。
 
+> **所有控件内的表达式（公式）都必须用 `<![CDATA[]]>` 包裹**，包括 `OnClick`、`KeyEnter`、`CheckRule`、`ValueChanged`、`DefaultFormulaValue` 等。
+
 ## XSD 参考文件
 
 - 控件定义：[BaseControlDefinition.xsd](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/xsd/xsd/element/complex/BaseControlDefinition.xsd)
@@ -92,16 +94,53 @@ description: 生成 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、D
 将控件绑定到 DataObject 的某个 Table.Column：
 
 ```xml
-<DataBinding TableKey="PurchaseOrder" ColumnKey="PONo" />
+<DataBinding TableKey="PurchaseOrder" ColumnKey="PONo"/>
+
+<!-- 带校验规则 -->
+<DataBinding TableKey="EPM_Strategy" ColumnKey="Code">
+    <CheckRule><![CDATA[IIF(Code=='', '请输入代码', true)]]></CheckRule>
+</DataBinding>
+
+<!-- 带默认值公式 -->
+<DataBinding DefaultFormulaValue="Macro_MultiLangText('EPM_Strategy','Name')"/>
+
+<!-- 带值改变事件 -->
+<DataBinding ColumnKey="PackageUnitID">
+    <ValueChanged><![CDATA[com.bokesoft.erp.pm.function.StrategiesFormula.setMinUnitID();]]></ValueChanged>
+</DataBinding>
 ```
 
 ### Format（格式化）
 
 控制控件的显示格式。
 
-### Condition（条件控制）
+### Condition（查询条件） ⭐ 报表/查询表单重要
 
-控制控件在不同条件下的行为。
+用于报表/查询表单中，将控件值作为查询条件关联到结果表字段：
+
+```xml
+<!-- 简单等值条件 -->
+<Condition ColumnKey="MaintPlantID" TableKey="{ResultTableKey}" CondSign="=" UseAdvancedQuery="true"/>
+
+<!-- like 模糊查询 -->
+<Condition ColumnKey="DocumentNumber" TableKey="{ResultTableKey}" CondSign="like" LoadHistoryInput="true" UseAdvancedQuery="true"/>
+
+<!-- 自定义条件（日期转换等复杂场景） -->
+<Condition TableKey="{ResultTableKey}" CondSign="custom" UseAdvancedQuery="true">
+    <CustomCondition Condition="Cond_CreateDate &gt; 0" Filter="CAST(CreateTime as DATE) = ${Cond_CreateDate_Para1}">
+        <CustomConditionPara Key="Cond_CreateDate_Para1" Formula="Replace(ToString(ConditionPara('Cond_CreateDate')), '-', '')"/>
+    </CustomCondition>
+    <CustomCondition Condition="1 == 1" Filter=" 1 = 1 "/>
+</Condition>
+```
+
+| 属性 | 说明 |
+|------|------|
+| `ColumnKey` | 结果表中对应的列名 |
+| `TableKey` | 结果表标识 |
+| `CondSign` | 条件符号：`=`, `like`, `custom` |
+| `UseAdvancedQuery` | 是否使用高级查询 |
+| `LoadHistoryInput` | 是否加载历史输入 |
 
 ---
 
@@ -226,8 +265,8 @@ description: 生成 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、D
 ### 7. Button（按钮）
 
 ```xml
-<Button Key="btnCalc" Caption="计算" Icon="calc.png" IconLocation="Left">
-    <OnClick>按钮点击事件公式</OnClick>
+<Button Key="btnCalc" Caption="计算" Type="Normal">
+    <OnClick><![CDATA[ERPShowModal('TargetForm', GetCallFormula('Macro_ShowEvent', SOID));]]></OnClick>
 </Button>
 ```
 
@@ -294,12 +333,12 @@ description: 生成 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、D
 
 控件可以放在以下面板内：
 
+- `GridLayoutPanel`（网格布局 — 通过 X/Y 定位，**抬头控件优先使用**）
 - `FlexFlowLayoutPanel`（弹性流式布局）
 - `FlexGridLayoutPanel`（弹性网格布局）
 - `FlowLayoutPanel`（流式布局）
 - `BorderLayoutPanel`（边框布局）
-- `GridLayoutPanel`（网格布局 — 通过 X/Y 定位）
-- `TabPanel`（分页面板 — 直接作为页签内容）
+- `TabPanel`（分页面板）
 - `SplitPanel`（分割面板）
 
 ## 与其他 Skill 的配合
@@ -307,4 +346,5 @@ description: 生成 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、D
 - 控件放置在 `yigo-panel-layout` 生成的面板内
 - 控件的 `DataBinding` 引用 `yigo-dataobject-generator` 定义的 Table/Column
 - 表格中的单元格也用到控件属性 → 参考 `yigo-grid-generator`
+- 报表/查询表单中控件的 `Condition` 子元素 → 参考模板 3/4 in `yigo-form-scaffold`
 - 按钮/事件中的公式内容 → 参考 `yigo-expression-helper`
