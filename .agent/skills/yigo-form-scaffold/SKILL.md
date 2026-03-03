@@ -1,13 +1,13 @@
 ---
 name: yigo-form-scaffold
-description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、DataSource、Body、OperationCollection、ScriptCollection 等顶层容器
+description: 生成与解读 YIGO Form XML 的骨架结构，包括 Form 根节点、DataSource、Body、OperationCollection、ScriptCollection 等顶层容器
 ---
 
 # YIGO Form 脚手架生成
 
 ## 概述
 
-本 Skill 负责生成 YIGO Form XML 的**顶层骨架结构**。Form 是 YIGO 系统中窗口配置的根对象，包含数据源、操作集合、脚本集合、窗体等核心子元素。
+本 Skill 负责生成 YIGO Form XML 的**顶层骨架结构**。Form 是 YIGO 系统中窗口配置的根对象，包含数据源、操作集合、脚本集合、窗体等核心子元素。文件名与Form的Key要相同
 
 ## CDATA 规约
 
@@ -156,6 +156,10 @@ description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、Data
 2. **Key 长度限制**：不超过 50 字符
 3. **子元素顺序**：`DataSource → OperationCollection → ScriptCollection → Body → NavigationBar → OnLoad → OnClose → OnPostShow → MacroCollection → FormRelationCollection`
 
+## 命名规范
+
+1.
+
 ## 表单模板
 
 根据需要生成的表单类型，读取对应模板文件获取完整骨架结构：
@@ -165,7 +169,7 @@ description: 生成 YIGO Form XML 的骨架结构，包括 Form 根节点、Data
 | 字典表单 | [dict-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/dict-form.md) | `FormType="Dict"` + SplitPanel（表头 + 明细表）+ 系统信息页签 |
 | 后台配置表 | [backend-config-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/backend-config-form.md) | `FormType="Entity"` + 纯 Detail Grid，无表头，OnLoad 加载 |
 | 单界面报表 | [single-report-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/single-report-form.md) | SplitPanel（条件区 + 结果 Grid），控件带 `Condition` 子元素 |
-| 双表单报表 | [dual-report-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/dual-report-form.md) | 条件表单 + 结果表单，`ERPShowModal` 弹出条件，`parent.LoadData()` 回传 |
+| 双表单报表 | [dual-report-form.md](file:///d:/Workbench/idea/yigo-ai-assistance-research/.agent/skills/yigo-form-scaffold/templates/dual-report-form.md) | 条件表单 + 结果表单，`ERPShowModal` 弹出条件，输入条件后确认加载数据 |
 
 
 

@@ -1,6 +1,6 @@
 ---
 name: yigo-grid-generator
-description: 生成 YIGO Form XML 中的 Grid 表格控件，包含 GridColumnCollection、GridRowCollection、GridCell 单元格配置、事件绑定和分页设置
+description: 生成与解读 YIGO Form XML 中的 Grid 表格控件，包含 GridColumnCollection、GridRowCollection、GridCell 单元格配置、事件绑定和分页设置
 ---
 
 # YIGO Grid 表格控件生成
@@ -293,7 +293,7 @@ GridCell 的 `CellType` 属性决定单元格使用哪种控件，取值参考 `
 
 ```xml
 <Grid Key="gridList" Caption="采购订单列表" 
-      SelectionMode="Row" PageLoadType="DB" PageRowCount="20" ShowRowHead="true">
+      SelectionMode="Row" PageLoadType="DB" ShowRowHead="true">
     <GridColumnCollection>
         <GridColumn Key="colPONo" Caption="订单编号" Width="120" Sortable="true" />
         <GridColumn Key="colDate" Caption="订单日期" Width="100" Sortable="true" />

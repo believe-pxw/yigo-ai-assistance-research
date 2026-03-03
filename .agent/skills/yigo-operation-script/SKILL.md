@@ -1,6 +1,6 @@
 ---
 name: yigo-operation-script
-description: 生成 YIGO Form XML 中的 OperationCollection（操作集合）、ScriptCollection（脚本集合）和 MacroCollection（宏公式集合）
+description: 生成与解读 YIGO Form XML 中的 OperationCollection（操作集合）、ScriptCollection（脚本集合）和 MacroCollection（宏公式集合）
 ---
 
 # YIGO 操作与脚本生成

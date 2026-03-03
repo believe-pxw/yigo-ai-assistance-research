@@ -1,7 +1,5 @@
 # 模板：字典表单
 
-参考：[PM_Strategy.xml](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/referenceForm/PM_Strategy.xml)
-
 典型结构：`FormType="Dict"` + SplitPanel（上 GridLayoutPanel 表头 + 下 Grid 明细） + TabPanel 系统信息页签。
 
 ```xml
@@ -40,17 +38,18 @@
                                 <!-- 按需添加行 -->
                             </RowDefCollection>
                             <ColumnDefCollection ColumnGap="16">
-                                <ColumnDef Width="190px"/>
-                                <ColumnDef Width="30px"/>
-                                <ColumnDef Width="190px"/>
-                                <ColumnDef Width="30px"/>
+                                <ColumnDef Width="25%"/>
+                                <ColumnDef Width="25%"/>
+                                <ColumnDef Width="25%"/>
+                                <ColumnDef Width="25%"/>
+                                <!-- 按需添加列，一般是三列或四列 -->
                             </ColumnDefCollection>
                         </GridLayoutPanel>
                         <!-- 明细 Grid -->
                         <Grid Key="{DtlGridKey}" Caption="{明细名称}" SerialSeq="true" Padding="8px">
                             <!-- 由 yigo-grid-generator 生成 -->
                         </Grid>
-                        <SplitSize Size="425px"/>
+                        <SplitSize Size="425px"/><!-- 根据行高和行数 生成 -->
                         <SplitSize Size="100%"/>
                     </SplitPanel>
                     <!-- 系统信息页签 -->

@@ -1,7 +1,5 @@
 # 模板：后台配置单明细表
 
-参考：[PM_Default4ObjectTypes.xml](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/referenceForm/PM_Default4ObjectTypes.xml)
-
 典型结构：`FormType="Entity"` + 只有 Detail Grid（无主表表头），ToolBar + GridLayoutPanel 包裹 Grid，OnLoad 加载数据。
 
 ```xml

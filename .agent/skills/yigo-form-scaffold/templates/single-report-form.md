@@ -1,7 +1,5 @@
 # 模板：单界面报表（条件 + 结果表格）
 
-参考：[PM_MaintOrderSearchHelp_Plan.xml](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/referenceForm/PM_MaintOrderSearchHelp_Plan.xml)
-
 典型结构：SplitPanel（上 GridLayoutPanel 条件区 + 下 Grid 结果区），条件控件带 `Condition` 子元素。
 
 ```xml

@@ -1,13 +1,9 @@
 # 模板：双表单报表（条件表单 + 结果表单）
 
-参考：
-- 结果表单：[PM_EquipmentQuery.xml](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/referenceForm/PM_EquipmentQuery.xml)
-- 条件表单：[Cond_PM_EquipmentQuery.xml](file:///d:/Workbench/idea/yigo-ai-assistance-research/resource/referenceForm/Cond_PM_EquipmentQuery.xml)
-
 由**条件选择表单**和**结果展示表单**两个 Form 组成：
 - 结果表单（parent）在 `OnLoad` 中通过 `ERPShowModal` 弹出条件表单
 - 结果表单有"重新选择"操作按钮，再次弹出条件表单
-- 条件表单通过 `parent.LoadData()` 将条件传递给结果表单
+- 条件表单通过 `DealCondition(true);parent.Macro_LoadObject()` 将条件传递给结果表单
 
 ## 结果表单
 

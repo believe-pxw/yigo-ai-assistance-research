@@ -1,6 +1,6 @@
 ---
 name: yigo-domain-generator
-description: 生成 YIGO Domain XML 配置，定义数据域的控件类型、数据类型、精度长度及 ComboBox 枚举值，按 RefControlType 追加到对应的 DomainDef_{Type}.xml 文件
+description: 生成与解读 YIGO Domain XML 配置，定义数据域的控件类型、数据类型、精度长度及 ComboBox 枚举值，按 RefControlType 追加到对应的 DomainDef_{Type}.xml 文件
 ---
 
 # YIGO Domain 数据域生成

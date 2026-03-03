@@ -1,6 +1,6 @@
 ---
 name: yigo-panel-layout
-description: 生成 YIGO Form XML 中的面板和布局结构，支持 GridLayoutPanel、FlexFlowLayoutPanel、TabPanel、SplitPanel 等 18 种面板类型的嵌套组合
+description: 生成与解读 YIGO Form XML 中的面板和布局结构，支持 GridLayoutPanel、FlexFlowLayoutPanel、TabPanel、SplitPanel 等 18 种面板类型的嵌套组合
 ---
 
 # YIGO 面板与布局生成

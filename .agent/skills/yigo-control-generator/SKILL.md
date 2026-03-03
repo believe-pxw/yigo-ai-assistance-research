@@ -1,6 +1,6 @@
 ---
 name: yigo-control-generator
-description: 生成 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、Dict、ComboBox、DatePicker、Button 等 30 种控件类型，含数据绑定、格式和条件控制
+description: 生成与解读 YIGO Form XML 中的 UI 控件配置，支持 TextEditor、Dict、ComboBox、DatePicker、Button 等 30 种控件类型，含数据绑定、格式和条件控制
 ---
 
 # YIGO UI 控件生成

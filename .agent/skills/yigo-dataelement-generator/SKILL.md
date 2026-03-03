@@ -1,6 +1,6 @@
 ---
 name: yigo-dataelement-generator
-description: 生成 YIGO DataElement XML 配置，定义字段级元数据（Key、Caption、DomainKey、FieldLabel 多语言标签），按 RefControlType 追加到对应的 DataElementDef_{Type}.xml 文件
+description: 生成与解读 YIGO DataElement XML 配置，定义字段级元数据（Key、Caption、DomainKey、FieldLabel 多语言标签），按 RefControlType 追加到对应的 DataElementDef_{Type}.xml 文件
 ---
 
 # YIGO DataElement 生成

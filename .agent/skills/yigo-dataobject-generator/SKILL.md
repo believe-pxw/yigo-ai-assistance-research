@@ -1,6 +1,6 @@
 ---
 name: yigo-dataobject-generator
-description: 生成 YIGO DataObject XML 配置，包含 TableCollection、Column、Relation、IndexCollection 等数据模型定义
+description: 生成与解读 YIGO DataObject XML 配置，包含 TableCollection、Column、IndexCollection 等数据模型定义
 ---
 
 # YIGO DataObject 数据对象生成
@@ -9,7 +9,7 @@ description: 生成 YIGO DataObject XML 配置，包含 TableCollection、Column
 
 本 Skill 负责生成 YIGO 系统的**数据对象（DataObject）XML 配置**。DataObject 定义了表单的数据模型，包含表集合、列定义、表间关系、嵌入表和索引等。
 
-> **核心原则**：Column 优先使用 `DataElementKey` 引用数据元素（由 `yigo-dataelement-generator` 管理），通过 DataElement → Domain 链获取数据类型。仅在无对应 DataElement 时才使用内联 `DataType/Length/Precision/Scale`。
+> **核心原则**：Column 优先使用 `DataElementKey` 引用数据元素（由 `yigo-dataelement-generator` 管理），通过 DataElement → Domain 链获取数据类型。如果DataObject是一个单独的文件，需要文件名与DataObject的Key相同。表标识必须要以E开头，如果已指定前缀，则在前缀前加上E
 
 ## XSD 参考文件
 
@@ -25,8 +25,6 @@ Column.DataElementKey → DataElement.Key → DataElement.DomainKey → Domain.K
 
 - **DataElement**（`yigo-dataelement-generator`）：定义字段的 Key/Caption/DomainKey + 多语言标签
 - **Domain**（`yigo-domain-generator`）：定义字段的 RefControlType/DataType/Length/Precision/Scale
-
-当 Column 配置了 `DataElementKey` 时，**不能再配置** `Precision`、`Scale`、`Length`（XSD 校验约束）。
 
 ## DataObject 完整结构
 
@@ -51,12 +49,7 @@ Column.DataElementKey → DataElement.Key → DataElement.DomainKey → Domain.K
         </Table>
     </TableCollection>
 
-    <!-- 2. 关系定义 -->
-    <Relation>
-        <Layer ItemKey="字典项" ColumnKey="列" TableKey="表" Relation="关系表达式"/>
-    </Relation>
-
-    <!-- 3. 嵌入表集合 -->
+    <!-- 2. 嵌入表集合 -->
     <EmbedTableCollection>
         <EmbedTable ObjectKey="对象标识" TableKeys="表1,表2"/>
     </EmbedTableCollection>
@@ -120,7 +113,7 @@ Column.DataElementKey → DataElement.Key → DataElement.DomainKey → Domain.K
 
 ## Column（列）属性
 
-### 推荐方式：引用 DataElementKey
+### 推荐方式：引用 DataElementKey，如果DataElement中无定义，则新增数据元素
 
 ```xml
 <Column Key="SchedulingIndicator" Caption="计划标识" Cache="true" DataElementKey="SchedulingIndicatorType"/>
@@ -160,13 +153,13 @@ Column.DataElementKey → DataElement.Key → DataElement.DomainKey → Domain.K
 <Column Key="POID" Caption="父对象标识" DataElementKey="POID"/>
 <Column Key="VERID" Caption="对象版本" DataElementKey="VERID"/>
 <Column Key="DVERID" Caption="对象明细版本" DataElementKey="DVERID"/>
-<Column Key="Enable" Caption="启用标记" DefaultValue="1" DataElementKey="Enable"/><!--字典必要-->
-<Column Key="TLeft" Cache="true" DataElementKey="TLeft"/><!--字典必要-->
-<Column Key="TRight" Cache="true" DataElementKey="TRight"/><!--字典必要-->
-<Column Key="NodeType" Caption="节点类型" DataElementKey="NodeType"/><!--字典必要-->
-<Column Key="ParentID" Caption="上级节点" DataElementKey="ParentID"/><!--字典必要-->
-<Column Key="Code" Caption="代码" Cache="true" DefaultValue="" DataElementKey="Code" PrimaryKey="true"/><!--字典必要-->
-<Column Key="Name" Caption="名称" Persist="false" Cache="true" DefaultValue="" SupportI18n="true" DataElementKey="Name"/><!--字典必要-->
+<Column Key="Enable" Caption="启用标记" DefaultValue="1" DataElementKey="Enable"/><!--字典才必要-->
+<Column Key="TLeft" Cache="true" DataElementKey="TLeft"/><!--字典才必要-->
+<Column Key="TRight" Cache="true" DataElementKey="TRight"/><!--字典才必要-->
+<Column Key="NodeType" Caption="节点类型" DataElementKey="NodeType"/><!--字典才必要-->
+<Column Key="ParentID" Caption="上级节点" DataElementKey="ParentID"/><!--字典才必要-->
+<Column Key="Code" Caption="代码" Cache="true" DefaultValue="" DataElementKey="Code" PrimaryKey="true"/><!--字典才必要-->
+<Column Key="Name" Caption="名称" Persist="false" Cache="true" DefaultValue="" SupportI18n="true" DataElementKey="Name"/><!--字典才必要-->
 <Column Key="ClientID" Caption="集团" DataElementKey="ClientID"/>
 <Column Key="Creator" Caption="创建人员" DataElementKey="Creator"/>
 <Column Key="CreateTime" Caption="创建时间" DataElementKey="CreateTime"/>
@@ -199,7 +192,7 @@ Column.DataElementKey → DataElement.Key → DataElement.DomainKey → Domain.K
 
 ## 使用示例
 
-### 示例：字典数据对象（参考 PM_Strategy.xml）
+### 示例：字典数据对象
 
 ```xml
 <DataObject Key="PM_Strategy" Caption="维护策略" PrimaryTableKey="EPM_Strategy" SecondaryType="Dict" PrimaryType="Entity" Version="1">
