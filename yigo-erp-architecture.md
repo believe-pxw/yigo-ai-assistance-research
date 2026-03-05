@@ -10,3 +10,4 @@
 10.@entry.xml中定义了菜单入口，打开菜单后会根据formkey打开对应的form表单
 11.Commondef.xml中定义了顶层宏公式，在form中可以调用，注意：form中同名的宏公式会覆盖Commondef.xml中的宏公式
 12.由于是erp系统，现在我的xml与java二开代码都已经有百万行代码之多
+13.预定义数据：每一个form，特别是后台管理类的form，都会有一个预定义数据，在initializeData文件夹下有一个与form同名的xml文件，其中，里面的结构为dataobject中的表结构，数据对应为预定义的数据，这部分数据可用于初始化系统时的初始数据，预定义数据还有一个用途，就是用于系统升级，根据里面的数据升级系统。具体的内容可参考[text](../../../Users/boke/Desktop/Workbench/source_202512/bokeerp/erp-update/src/main/resources/erp-solution-update/分支2512-000阶段升级记录/imconfig/预定义数据/TCodeAuthorityObjectFieldDefaultValue.xml)文件，还有一个规则说明下，就是父子表关联通过父表__OldPrimaryValue与子表POID关联。
