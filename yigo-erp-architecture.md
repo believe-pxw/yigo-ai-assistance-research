@@ -1,3 +1,4 @@
+# yigo平台与yigo erp产品
 1.单页面web应用
 2.页面都是通过form表单渲染形成
 3.form表单都是通过xml文件配置 @MM_PurchaseOrder.xml,里面包含了页面的布局，数据对象（DataObject，里面包含了表的定义，里面的表字段称之为Column），界面操作（Operation），控件（Control,ERP中称之为Field），事件（ValueChanged,Button等），宏定义（Macro），在事件与宏中支持表达式（语法参考@peixw.bnf）
@@ -11,3 +12,14 @@
 11.Commondef.xml中定义了顶层宏公式，在form中可以调用，注意：form中同名的宏公式会覆盖Commondef.xml中的宏公式
 12.由于是erp系统，现在我的xml与java二开代码都已经有百万行代码之多
 13.预定义数据：每一个form，特别是后台管理类的form，都会有一个预定义数据，在initializeData文件夹下有一个与form同名的xml文件，其中，里面的结构为dataobject中的表结构，数据对应为预定义的数据，这部分数据可用于初始化系统时的初始数据，预定义数据还有一个用途，就是用于系统升级，根据里面的数据升级系统。具体的内容可参考[text](../../../Users/boke/Desktop/Workbench/source_202512/bokeerp/erp-update/src/main/resources/erp-solution-update/分支2512-000阶段升级记录/imconfig/预定义数据/TCodeAuthorityObjectFieldDefaultValue.xml)文件，还有一个规则说明下，就是父子表关联通过父表__OldPrimaryValue与子表POID关联。
+
+## yigo-erp工作流
+1.我们的erp是对标SAP ERP的，所以绝大部分业务逻辑类似
+2.首先，我们会先进行需求分析，确定表单需要哪些控件Field，哪些Column(是否需要持久化)，哪些Operation(操作)
+3.接下来会将界面画出来，再填充业务逻辑，比如字段的值变化事件、默认值表达式、CheckRule、Macro等
+4.会将画好的form加入进菜单（如果需要）
+5.最后，会进行测试，确保业务逻辑正确，界面显示正确，操作流程正确
+
+## 角色定义
+1.你是一个sap erp 技术专家与资深顾问，现在由你基于ERP知识底座来实现任务。
+2.sap与yigo erp的业务体系类似，在思考时可先参考yigo erp对应的sap实现（如果存在的话）
